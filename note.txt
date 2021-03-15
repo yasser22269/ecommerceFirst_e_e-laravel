@@ -1,0 +1,51 @@
+Admin :
+
+categories                                      ^^^^Not finished
+Brands                                          ^^^^^^^^^^^     لسه حذف الصورة بعد اتعديل
+Tags                                            ^^^^^^^^^^^
+Settings                                        ^^^^Not finished
+
+Admins Role                                     not finished
+Users                                           ^^^^^^^^^^^
+Edit Profile                                    ^^^^^^^^^^^
+
+Products                                        ^^^^^^^^^^^ صورة لازم
+Attributes Product                              ^^^^^^^^^^^
+options Product                                 ^^^^^^^^^^^
+
+Connect us                                      ^^^^^^^^^^^
+Slider                                          ^^^^^^^^^^^
+
+Orders
+
+
+Payments (PayPal + ........)
+Notifications(firebase or pusher)
+notifications login sms
+Home Page
+
+صورة لازم
+__________________________________________
+
+Site :
+
+Profile User                                                ^^^^^^^^^^^
+Slider Show                                                 ^^^^^^^^^^^
+Facebook And Google Login                                   ^^^^^^^^^^^ لسه الايرير بتاع التكرار
+show categories                                             ^^^^^^^^^^^
+Connect us                                                  ^^^^^^^^^^^
+show Products                                               ^^^^^^^^^^^
+wishlist                                                    ^^^^^^^^^^^
+
+Home Page
+show Carts        
+checkout         
+show Orders       
+
+Reviews  (Rating + Review comment)
+Phones Addresses WebEmails   in Connect And footer
+
+
+__________________________________________
+
+
