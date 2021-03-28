@@ -23,3 +23,14 @@ function uploadImage($folder,$image){
 //     ];
 //     return $data;
 // }
+function Check_specialprice_null($product)
+{
+
+if($product->special_price !=null  && $product->special_price_end < now()){
+    $product->special_price =null;
+    $product->special_price_type =null;
+    $product->special_price_start =null;
+    $product->special_price_end =null;
+    $product->save();
+}
+}

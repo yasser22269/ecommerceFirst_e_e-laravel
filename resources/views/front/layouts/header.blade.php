@@ -32,6 +32,8 @@
         .invalid-feedback{
             display:block;
         }
+
+        
     </style>
 </head>
 

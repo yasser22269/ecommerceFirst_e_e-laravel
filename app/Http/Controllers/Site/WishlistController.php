@@ -28,10 +28,11 @@ class WishlistController extends Controller
 
     public function store(Request $request)
     {
-        if (!Auth::user()){
-            return view('login');
+        if (!Auth::user() == 1){
+            // return redirect()->route('login')->with(['error' => 'يرجى تسجيل الدخول اولا']);
+            return response() -> json(['error' => 'يرجى تسجيل الدخول اولا']);
         }
-        if (! auth('web')->user()->wishlistHas(request('productId'))) {
+        else if (! auth('web')->user()->wishlistHas(request('productId'))) {
              auth('web')->user()->wishlist()->attach(request('productId'));
             return response() -> json(['status' => true , 'wished' => true]);
         }

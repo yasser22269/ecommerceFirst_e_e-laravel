@@ -8,6 +8,7 @@ use App\Providers\RouteServiceProvider;
 use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -51,18 +52,25 @@ class LoginController extends Controller
 
     public function handleProviderCallback($driver)
     {
-        $user = Socialite::driver($driver)->stateless()->user();
-        //   dd( $user) ;
-
-        $authUser = $this->findOrCreateUser($user, $driver);
-      //  return  $authUser;
-        Auth::login($authUser, true);
-        if($authUser->password == " "){
-            return redirect()->route('profile')->with(['success' => '  تم التسجيل بنجاح يرجى ملئ باقى التسجيل' ]);
-         }else
-         return redirect($this->redirectTo)->with(['success' => 'تم التسجيل بنجاح']);
 
 
+    //  try{
+
+        //  DB::beginTransaction();
+
+         $user = Socialite::driver($driver)->stateless()->user();
+         $authUser = $this->findOrCreateUser($user, $driver);
+         Auth::login($authUser, true);
+         if($authUser->password == " "){
+             return redirect()->route('profile')->with(['success' => '  تم التسجيل بنجاح يرجى ملئ باقى التسجيل' ]);
+          }else
+          return redirect($this->redirectTo)->with(['success' => 'تم التسجيل بنجاح']);
+
+
+//   }catch (\Exception $ex) {
+//       DB::rollback();
+//       return redirect($this->redirectTo)->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+//   }
 
     }
 

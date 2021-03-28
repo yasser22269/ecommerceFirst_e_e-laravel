@@ -111,7 +111,7 @@
 </div><!-- Hero Section End -->
 @endisset
 
-<!-- Banner Section Start -->
+{{-- <!-- Banner Section Start -->
 <div class="banner-section section mb-60">
     <div class="container">
         <div class="row row-10">
@@ -128,7 +128,7 @@
 
         </div>
     </div>
-</div><!-- Banner Section End -->
+</div><!-- Banner Section End --> --}}
 
 <!-- Feature Product Section Start -->
 <div class="product-section section mb-70">

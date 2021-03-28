@@ -46,30 +46,7 @@
                                 <a href="#" data-target="list"><i class="fa fa-list"></i></a>
                             </div>
 
-                            {{-- <!-- Product Showing -->
-                            <div class="product-showing">
-                                <p>Showing</p>
-                                <select name="showing" class="nice-select" style="display: none;">
-                                    <option value="1">8</option>
-                                    <option value="2">12</option>
-                                    <option value="3">16</option>
-                                    <option value="4">20</option>
-                                    <option value="5">24</option>
-                                </select><div class="nice-select" tabindex="0"><span class="current">8</span><ul class="list"><li data-value="1" class="option selected">8</li><li data-value="2" class="option">12</li><li data-value="3" class="option">16</li><li data-value="4" class="option">20</li><li data-value="5" class="option">24</li></ul></div>
-                            </div> --}}
 
-                            {{-- <!-- Product Short -->
-                            <div class="product-short">
-                                <p>Short by</p>
-                                <select name="sortby" class="nice-select" style="display: none;">
-                                    <option value="trending">Trending items</option>
-                                    <option value="sales">Best sellers</option>
-                                    <option value="rating">Best rated</option>
-                                    <option value="date">Newest items</option>
-                                    <option value="price-asc">Price: low to high</option>
-                                    <option value="price-desc">Price: high to low</option>
-                                </select><div class="nice-select" tabindex="0"><span class="current">Trending items</span><ul class="list"><li data-value="trending" class="option selected">Trending items</li><li data-value="sales" class="option">Best sellers</li><li data-value="rating" class="option">Best rated</li><li data-value="date" class="option">Newest items</li><li data-value="price-asc" class="option">Price: low to high</li><li data-value="price-desc" class="option">Price: high to low</li></ul></div>
-                            </div> --}}
 
                             <!-- Product Pages -->
                             <div class="product-pages">
@@ -102,16 +79,25 @@
 
 
                                 {{-- asset(''.) --}}
-                                <a href="{{ route('product.show', $product->slug) }}" class="img"><img src=" {{ $product->Images[0]->photo ?? asset('front/assets/images/product/product-1.png') }}"
+                                <a href="{{ route('product.show', $product->slug) }}" class="img"><img src="{{ $product->Images[0]->photo ?? asset('front/assets/images/product/product-1.png') }}"
                                     alt="Product Image" height="230px !important"></a>
 
 
                                     <div class="wishlist-compare">
                                         {{-- <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a> --}}
-                                        <a href="#" class="addToWishlist @if(auth('web')->user()->wishlistHas($product->id)) added @endif" data-tooltip="Wishlist" data-product-id="{{$product->id}}"><i class="ti-heart"></i></a>
+                                        <a href="#" class="addToWishlist
+                                        @if(auth('web')->user())
+                                            @if(auth('web')->user()->wishlistHas($product->id))
+                                            added
+                                            @endif
+                                         @endif
+                                         " data-tooltip="Wishlist" data-product-id="{{$product->id}}"><i class="ti-heart"></i></a>
                                     </div>
 
-                                <a href="#" class="add-to-cart"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
+                                <a href="#" data-cart-url="{{ route('site.cart.store',$product->id) }}" data-product-id="{{ $product->id }}" class="add-to-cart">
+                                    <i class="ti-shopping-cart">
+                                    </i><span>ADD TO CART</span>
+                                    </a>
 
                             </div>
 
@@ -132,18 +118,19 @@
                                 <div class="price-ratting">
 
                                     <h5 class="price">
-                                        @if (   $product->special_price )
-                                            <span class="old">${{ round(  $product->price,2) }}</span>
-                                        @endif
-                                        ${{ $product->special_price !=0 ? round($product->special_price,2) :  round($product->price,2) }}
+                    @if (   $product->special_price )
+                        <span class="old">${{ round(  $product->price,2) }}</span>
+                    @endif
+                    ${{ $product->special_price !=0 ? round($product->special_price,2) :  round($product->price,2) }}
 
                                     </h5>
                                     <div class="ratting">
-                                        <i class="fa fa-star"></i>
+                                        <b>{{ $product->viewed }} viewed</b>
+                                        {{-- <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star-half-o"></i>
-                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i> --}}
                                     </div>
 
                                 </div>
@@ -188,25 +175,38 @@
 
                                 <div class="left-content">
 
-                                    <div class="ratting">
-                                        <i class="fa fa-star"></i>
+                                    {{-- <div class="ratting">
+                                        {{-- <b>{{ $product->viewed }} viewed</b> --}}
+
+                                        {{-- <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star-half-o"></i>
                                         <i class="fa fa-star-o"></i>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="desc">
-                                        <p> {{  $product->short_description  ?? ' '}}</p>
+                                        <p> {{  $product->short_description  ?? '-'}}</p>
                                     </div>
 
                                     <div class="actions">
 
-                                        <a href="#" class="add-to-cart"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
+                                        <a href="#" data-cart-url="{{ route('site.cart.store',$product->id) }}" data-product-id="{{ $product->id }}" class="add-to-cart">
+                                            <i class="ti-shopping-cart"></i>
+                                            <span>ADD TO CART</span>
+                                            </a>
+
+
+
 
                                         <div class="wishlist-compare">
                                             {{-- <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a> --}}
-                                        <a href="#" class="addToWishlist @if(auth('web')->user()->wishlistHas($product->id)) added @endif" data-tooltip="Wishlist" data-product-id="{{$product->id}}"><i class="ti-heart"></i></a>
+                                        <a href="#" class="addToWishlist
+                                        @if(auth('web')->user())
+                                                @if(auth('web')->user()->wishlistHas($product->id))
+                                                added
+                                                @endif
+                                           @endif" data-tooltip="Wishlist" data-product-id="{{$product->id}}"><i class="ti-heart"></i></a>
                                         </div>
 
                                     </div>
@@ -291,21 +291,18 @@
 
 
 
-
 @endsection
 
 
 
 @section('js')
-/*--
-    Product View Mode
-------------------------*/
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-    $.ajaxSetup({
+    {{-- $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
-    });
+    }); --}}
     $(document).on('click', '.addToWishlist', function (e) {
         e.preventDefault();
 
@@ -321,15 +318,58 @@
                 if(data.wished ){
                     $('#wishlistNumber').text(Number($('#wishlistNumber').text())+1);
                      $('.addToWishlist').addClass('active');
+
                   }
                 else{
                     $('#wishlistNumber').text(Number($('#wishlistNumber').text()) -1);
                    $('.addToWishlist').removeClass('active');
                 }
+
+                if(data.error){
+                    swal(data.error, "You clicked the button!", "error");
+                }
             }
         });
     });
 $(".slider").not('.slick-initialized').slick();
+</script>
+
+
+
+
+<script>
+    {{-- $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    }); --}}
+    $(document).on('click', '.add-to-cart', function (e) {
+        e.preventDefault();
+
+
+        $.ajax({
+            type: 'post',
+            url: $(this).attr('data-cart-url'),
+            data: {
+                'id': $(this).attr('data-product-id'),
+                "_token": "{{ csrf_token() }}",
+            },
+            success: function (data) {
+                if(data.wished ){
+                    $('#CartNumber').html(Number($('#CartNumber').text())+1);
+                    $( ".data-cart-url").addClass(" added");
+                  }
+
+                if(data.success && $(".data-cart-url").hasClass("added") != true){
+                    swal(data.success, "You clicked the button!", "success");
+                }else{
+                    $('#CartNumber').html(Number($('#CartNumber').text())-1);
+                }
+
+            }
+        });
+    });
+
 </script>
 
 @endsection

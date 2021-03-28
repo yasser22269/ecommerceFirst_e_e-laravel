@@ -76,9 +76,13 @@
                     <!-- Wishlist -->
                     <a href="{{ route('Wishlists.index') }}" class="header-wishlist"><i class="ti-heart"></i> <span class="number" id='wishlistNumber' value='{{ auth('web')->user()->wishlist->Count() }}'>{{ auth('web')->user()->wishlist->Count() }}</span></a>
                     {{-- {{ auth('web')->user()->wishlist()->Count() }} --}}
-                    <!-- Cart -->
-                    <a href="cart.html" class="header-cart"><i class="ti-shopping-cart"></i> <span class="number">3</span></a>
                     @endauth
+                    <!-- Cart -->
+                    <a href="{{ route('site.cart.index') }}">
+{{--  class="header-cart" --}}
+
+                        <i class="ti-shopping-cart"></i> <span id='CartNumber' class="number">{{ Cart::count() }}</span></a>
+
 
                 </div><!-- Header Shop Links End -->
             </div>

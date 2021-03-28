@@ -11,18 +11,22 @@
         "php": "^7.2.5|^8.0",
         "astrotomic/laravel-translatable": "^11.9",
         "fideloper/proxy": "^4.4",
-        "laravel/framework": "^6.20",
+        "hardevine/shoppingcart": "^2.9",
+        "laravel/framework": "^7.0",
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^1.2",
+        "laravel/ui": "~2.0",
         "mcamara/laravel-localization": "^1.6",
+        "paypal/rest-api-sdk-php": "*",
+        // "srmklive/paypal": "~1.0",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
+
     "require-dev": {
-        "facade/ignition": "^1.16.4",
+        "facade/ignition": "^2.0",
         "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^3.0",
+        "nunomaduro/collision": "^4.1",
         "phpunit/phpunit": "^8.5.8|^9.3.3"
     },
     "config": {

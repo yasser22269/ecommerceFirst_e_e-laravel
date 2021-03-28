@@ -106,4 +106,14 @@ class Product extends Model
     {
         return $this->hasMany(Option::class, 'product_id');
     }
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class,'product_id');
+    }
+
+    public function order()
+    {
+        return $this->belongsToMany(Order::class);
+    }
 }

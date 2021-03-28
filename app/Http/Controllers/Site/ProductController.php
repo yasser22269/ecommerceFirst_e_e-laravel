@@ -22,12 +22,22 @@ class ProductController extends Controller
         $categories = Category::where('slug', $slug)->translatedIn(app() -> getLocale())->first();
         // return $categories;
         //القسم-الثانى Allproducts
-
-         if($slug =='Allproducts')
+         if($slug =='Allproducts'){
          $products = Product::translatedIn(app() -> getLocale())->paginate(PAGINATION_COUNT);
+            foreach($products as $product){
+                Check_specialprice_null($product);
+            }
+         }
         else{
-            if ($categories)
+            if ($categories){
+
              $products = $categories->product()->translatedIn(app() -> getLocale())->paginate(PAGINATION_COUNT);
+
+                foreach($products as $product){
+                    Check_specialprice_null($product);
+                }
+        // return $products;
+    }
              else
             $products = Product::translatedIn(app() -> getLocale())->paginate(PAGINATION_COUNT);
 
@@ -43,7 +53,10 @@ class ProductController extends Controller
 
     public function show($slug)
     {
-        $product = Product::where('slug', $slug)->translatedIn(app() -> getLocale())->first();
+        $product = Product::where('slug', $slug)->first();
+
+        //return $product ;
+        Check_specialprice_null($product);
 
 
         //viewed ++
@@ -59,12 +72,22 @@ class ProductController extends Controller
 
         $product_id =$product->id;
         $product_attributes =  Attribute::whereHas('option' , function ($q) use($product_id){
-             $q -> whereHas('product',function ($qq) use($product_id){
-                $qq -> where('product_id',$product_id);
-             });
+           //  $q -> whereHas('product',function ($qq) use($product_id){
+                $q -> where('product_id',$product_id);
+           //  });
         })->get();
+        //return $product_attributes ;
+        $Total_comments = $product->comment->count();
+        $countnum=0;
+        foreach ($product->comment as $comment){
+            $countnum+= intval($comment->rate);
+        }
+        if($Total_comments !=0)
+         $countnum= $countnum/$Total_comments;
 
-        return view('front.products.show',compact('product','slug','product_attributes'));
+
+
+        return view('front.products.show',compact('product','slug','product_attributes',"Total_comments",'countnum'));
     }
 
 

@@ -5,47 +5,57 @@ Brands                                          ^^^^^^^^^^^     لسه حذف ا
 Tags                                            ^^^^^^^^^^^
 Settings                                        ^^^^Not finished
 
-Admins Role                                     not finished
+
 Users                                           ^^^^^^^^^^^
 Edit Profile                                    ^^^^^^^^^^^
 
-Products                                        ^^^^^^^^^^^ صورة لازم
+Products                                        ^^^^^^^^^^^ صورة لازم + ajax
 Attributes Product                              ^^^^^^^^^^^
-options Product                                 ^^^^^^^^^^^
+options Product                                 ^^^^^^^^^^^ price in multi product
 
 Connect us                                      ^^^^^^^^^^^
 Slider                                          ^^^^^^^^^^^
 
+
+
 Orders
-
-
 Payments (PayPal + ........)
 Notifications(firebase or pusher)
 notifications login sms
+Admins Role
 Home Page
+coupon page
 
-صورة لازم
 __________________________________________
 
 Site :
 
 Profile User                                                ^^^^^^^^^^^
 Slider Show                                                 ^^^^^^^^^^^
-Facebook And Google Login                                   ^^^^^^^^^^^ لسه الايرير بتاع التكرار
+Facebook And Google Login                                   ^^^^^^^^^^^
 show categories                                             ^^^^^^^^^^^
 Connect us                                                  ^^^^^^^^^^^
 show Products                                               ^^^^^^^^^^^
 wishlist                                                    ^^^^^^^^^^^
+show Carts                                                  ^^^^^^^^^^^
+Reviews  (Rating + Review comment)                          ^^^^^^^^^^^
 
-Home Page
-show Carts        
-checkout         
-show Orders       
+checkout                                                    ^^^^^^^(coupon)
+show Orders                                                 ^^^^^^^^^^^
+Home Page and search
 
-Reviews  (Rating + Review comment)
-Phones Addresses WebEmails   in Connect And footer
 
+
+
+Phones Addresses WebEmails in Connect And footer
+reset password
 
 __________________________________________
 
 
+special_price table alone
+(product,tag,option,Attributes) lang
+
+  return $query->inRandomOrder()->take(4);
+
+order -- (In Stock : Availability -- Is available : 200)
