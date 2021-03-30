@@ -50,16 +50,26 @@
                     </div>
                   </div>
 
-                  <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                          <label for="projectinput2">Name</label>
-                          <textarea type="text" id="projectinput2" class="form-control" placeholder="Name" name="name" cols="30" rows="10"></textarea>
-                          @error('name')
-                          <span class="text-danger"> {{$message}}</span>
-                          @enderror
-                        </div>
-                      </div>
+                 
+                    <div class="row">
+
+                        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="projectinput2">Title:{{  $localeCode }}</label>
+                            <textarea  name="{{  $localeCode }}[title]" id="title"
+                            class="form-control"
+                            placeholder="{{  $localeCode }}:title"
+                             >{{old('title')}}</textarea>
+                              @error("$localeCode.title")
+                              <span class="text-danger"> {{$message}}</span>
+                              @enderror
+                            </div>
+                          </div>
+
+                        @endforeach
+
                     </div>
 
                     <div class="col-md-12">

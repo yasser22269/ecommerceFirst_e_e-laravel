@@ -33,9 +33,18 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
+                @if(Cart::Count() ==0)
+                <div class="row mr-2 ml-2" >
+                    <button type="text" class="btn btn-lg btn-block btn-outline-danger mb-2"
+                            id="type-error">لا يوجد منتاجات
+                    </button>
+                 </div>
+                @endif
                 <form action="#">
                     <!-- Cart Table -->
                     <div class="cart-table table-responsive mb-40">
+
+
                         <table class="table">
                             <thead>
                                 <tr>
@@ -70,9 +79,11 @@
 
                             </tbody>
                         </table>
+
                     </div>
 
                 </form>
+
 
                 <div class="row">
 
@@ -99,13 +110,19 @@
                         <div class="cart-summary">
                             <div class="cart-summary-wrap" style="margin-bottom: 0px;">
                                 <h4>Cart Summary</h4>
-                                <p>Sub Total <span>${{Cart::subtotal()}}</span></p>
+                                <p>Sub Total <span id='subCost'>${{Cart::subtotal()}}</span></p>
+                                @if(! $carts)
                                 <p>Tax  Cost <span>$13</span>
-                                {{-- <p>Coupon  Cost <span>$00.00</span></p> --}}
-                                <h2>Grand Total <span>${{Cart::subtotal() + 13}}</span></h2>
+                                <h2 >Grand Total <span id="totalCost">${{Cart::subtotal() + 13}}</span></h2>
+                                @else
+                                <h2 >Grand Total <span id="totalCost">${{Cart::subtotal()}}</span></h2>
+                                @endif
                             </div>
+                @if(Cart::Count() !=0)
+
                             <div class="cart-summary-button" style="text-align: center;">
                               <a href="{{ route("Order.index") }}"><button class="checkout-btn">Checkout</button></a>
+                @endif
                                {{-- <a href="{{ route('site.cart.update') }}"><button class="update-btn">Update Cart</button></a> --}}
                             </div>
                         </div>
@@ -142,8 +159,19 @@
             success: function (data) {
                 if(data.wished ){
                     $('#CartNumber').html(Number($('#CartNumber').text())-1);
+                    if(data.cartsCount == 0){
+                     $('#totalCost').html('$0.00');
+                     $('#subCost').html('$0.00');
+                    }
+                     else{
+                     $('#totalCost').html({{Cart::subtotal() +13}} + '$');
+                     $('#subCost').html({{Cart::subtotal()}} + '$');
+                    }
                     $( ".cart-" + data.id).hide();
+
                   }
+                  if(data.cartsCount == 0)
+                     $( '.cart-summary-button').hide();
 
                 if(data.success){
                     swal(data.success, "You clicked the button!", "success");

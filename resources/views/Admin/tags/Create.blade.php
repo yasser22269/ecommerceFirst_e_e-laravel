@@ -10,7 +10,7 @@
             <li class="breadcrumb-item"><a href="{{ route('Admin') }}">Admin</a>
             </li>
              <li class="breadcrumb-item"><a href="{{ route('Tag.index') }}">tags</a>
-            </li>  
+            </li>
             <li class="breadcrumb-item active">tags Create
             </li>
           </ol>
@@ -26,7 +26,7 @@
                 @csrf
                 <div class="form-body">
                   <h4 class="form-section">Tag Info</h4>
-                
+
 
                   <div class="row">
                     <div class="col-md-6">
@@ -39,16 +39,38 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <div class="form-group">
+                      {{-- <div class="form-group">
                         <label for="projectinput2">Name</label>
                         <input type="text" id="projectinput2" class="form-control" placeholder="Name" name="name">
                         @error('name')
                         <span class="text-danger"> {{$message}}</span>
                         @enderror
-                      </div>
+                      </div> --}}
                     </div>
                   </div>
+                  <div class="row">
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
 
+
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="projectinput2">Name:{{  $localeCode }}</label>
+                        <input type="text" id="projectinput2" class="form-control" placeholder="{{  $localeCode }}Name" name="{{  $localeCode }}[name]">
+                      </div>
+                        @error("$localeCode.name")
+                        <span class="text-danger"> {{$message}}</span>
+                        @enderror
+                    </div>
+
+
+
+
+                  @endforeach
+
+
+
+                  </div>
                   <div class="row">
                     <div class="col-md-12">
                             <label for="switcheryColor4"
@@ -58,23 +80,23 @@
                                    id="switcheryColor4"
                                    class="switchery" data-color="success"
                                    checked/>
-                            
+
                             @error("is_active")
                             <span class="text-danger">{{$message }}</span>
                             @enderror
                         </div>
-                        
 
-                       
+
+
                   </div>
-                
+
                 <div class="form-actions">
                   <button type="submit" class="btn btn-primary">
                     <i class="la la-check-square-o"></i> Save
                   </button>
                 </div>
               </form>
-        
+
           </div>
          </div>
 
@@ -82,6 +104,6 @@
          @endsection
 
 @section('js')
- 
+
 
 @endsection

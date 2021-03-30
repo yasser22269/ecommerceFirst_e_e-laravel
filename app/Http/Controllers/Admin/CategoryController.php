@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Category as RequestsCategory;
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category ;
 use App\Models\CategoryTranslation;
 use Illuminate\Support\Facades\DB;
@@ -31,9 +31,11 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $categoriesParent = Category::select('id')->translatedIn(app() -> getLocale())->Parent()->get();
         $categories = Category::select('id')->translatedIn(app() -> getLocale())->get();
+       // $categories = Category::select('id')->translatedIn(app() -> getLocale())->get();
         // return $categories;
-        return view('Admin.categories.create',compact('categories'));
+        return view('Admin.categories.create',compact('categories','categoriesParent'));
     }
 
     /**
@@ -42,17 +44,17 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RequestsCategory $request)
+    public function store(CategoryRequest $request)
     {
-        // try{
-
+         try{
+           // return $request;
        DB::beginTransaction();
             if(isset($request->is_active) && $request->is_active ==1)
             $request->request->add(['is_active' => 1]);
               else
               $request->request->add(['is_active' => 0]);
 
-
+                //parent
               if(! isset($request->parent_id) || $request->type ==1)
                 $request->request->add(['parent_id' => null]);
 
@@ -65,17 +67,17 @@ class CategoryController extends Controller
 
 
             //save translations
-            $Category->name = $request->name;
-            $Category->save();
+           // $Category->name = $request->name;
+            //$Category->save();
 
            // return $Category;
            DB::commit();
               return redirect()->route('Category.index')->with(['success' => 'تم ألاضافة بنجاح']);
 
-        // }catch (\Exception $ex) {
-        //     DB::rollback();
-        //     return redirect()->route('Category.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
-        // }
+         }catch (\Exception $ex) {
+             DB::rollback();
+             return redirect()->route('Category.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+         }
 
     }
 
@@ -90,7 +92,9 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
 
         $categories = Category::translatedIn(app() -> getLocale())->get();
-        return view('Admin.categories.edit',compact('categories',"category"));
+        $categoriesParent = Category::select('id')->translatedIn(app() -> getLocale())->Parent()->get();
+
+        return view('Admin.categories.edit',compact('categories',"category",'categoriesParent'));
 
     }
 
@@ -101,7 +105,7 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(RequestsCategory $request,$id)
+    public function update(CategoryRequest $request,$id)
     {
         try{
 
@@ -123,8 +127,8 @@ class CategoryController extends Controller
           $Category->update($request->all());
 
         //save translations
-        $Category->name = $request->name;
-        $Category->save();
+       // $Category->name = $request->name;
+       // $Category->save();
 
 
         DB::commit();

@@ -55,9 +55,13 @@ class Category extends Model
         return $this->belongsToMany(Product::class,'category_products');
     }
 
+    public  function scopeParent($query){
+        return $query->whereNull('parent_id');
+    }
+
         //get all childrens=
-        
-        public function childrens(){
-            return $this -> hasMany(Self::class,'parent_id');
-        }
+
+    public function childrens(){
+        return $this -> hasMany(Self::class,'parent_id','id');
+    }
 }

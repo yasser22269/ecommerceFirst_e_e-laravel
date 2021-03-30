@@ -40,16 +40,34 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <div class="form-group">
+                      {{-- <div class="form-group">
                         <label for="projectinput2">Name</label>
                         <input type="text" id="projectinput2" class="form-control" placeholder="Name" name="name" value="{{ $tag->name }}">
                         @error('name')
                         <span class="text-danger"> {{$message}}</span>
                         @enderror
-                      </div>
+                      </div> --}}
                     </div>
                   </div>
+                  <div class="row">
 
+                    @foreach($tag->translations as $tagName)
+
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="projectinput2">Name:{{  $tagName->locale }}</label>
+                          <input type="text" id="projectinput2" class="form-control" placeholder="{{  $tagName->locale }}Name" name="{{  $tagName->locale }}[name]" value="{{  $tagName->name }}">
+                        </div>
+                          @error("$tagName->locale.name")
+                          <span class="text-danger"> {{$message}}</span>
+                          @enderror
+                      </div>
+
+
+                    @endforeach
+
+                  </div>
                   <div class="row">
                     <div class="col-md-12">
                             <label for="switcheryColor4"

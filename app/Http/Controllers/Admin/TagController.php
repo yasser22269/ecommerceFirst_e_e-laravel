@@ -56,8 +56,8 @@ class TagController extends Controller
             $Tag =  Tag::create($request->except('_token'));
 
             //save translations
-            $Tag->name = $request->name;
-            $Tag->save();
+           // $Tag->name = $request->name;
+           // $Tag->save();
 
            // return $Tag;
            DB::commit();
@@ -108,8 +108,8 @@ class TagController extends Controller
           $Tag->update($request->all());
 
         //save translations
-        $Tag->name = $request->name;
-        $Tag->save();
+        //$Tag->name = $request->name;
+       // $Tag->save();
 
 
         DB::commit();

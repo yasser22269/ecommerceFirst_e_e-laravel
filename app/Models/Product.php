@@ -28,14 +28,7 @@ class Product extends Model
         'slug',
         'sku',
         'price',
-        'special_price',
-        'special_price_type',
-        'special_price_start',
-        'special_price_end',
-        'selling_price',
-        'manage_stock',
-        'qty',
-        'in_stock',
+
         'is_active'
     ];
 
@@ -45,8 +38,8 @@ class Product extends Model
      * @var array
      */
     protected $casts = [
-        'manage_stock' => 'boolean',
-        'in_stock' => 'boolean',
+        // 'manage_stock' => 'boolean',
+        // 'in_stock' => 'boolean',
         'is_active' => 'boolean',
     ];
 
@@ -56,10 +49,10 @@ class Product extends Model
      * @var array
      */
     protected $dates = [
-        'special_price_start',
-        'special_price_end',
-        'start_date',
-        'end_date',
+        // 'special_price_start',
+        // 'special_price_end',
+        // 'start_date',
+        // 'end_date',
         'deleted_at',
     ];
 
@@ -116,4 +109,13 @@ class Product extends Model
     {
         return $this->belongsToMany(Order::class);
     }
+    public function Offer()
+    {
+        return $this->hasMany(Offer::class,'offer_id');
+    }
+    public function ManageStock()
+    {
+        return $this->hasMany(ManageStock::class,'manage_stocks_id');
+    }
+
 }

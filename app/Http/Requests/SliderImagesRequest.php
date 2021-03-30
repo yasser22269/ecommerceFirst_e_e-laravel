@@ -26,7 +26,8 @@ class SliderImagesRequest extends FormRequest
     {
         return [
             // |unique:brand_translations,name,' . $this->id
-            'name' => 'required|max:100',
+            'ar.title' => 'required|max:100',
+            'en.title' => 'required|max:100',
             'category_id' => 'required|numeric|exists:categories,id',
             'photo' => 'required_without:id|image',
             'Discount' => 'required|min:0|numeric',

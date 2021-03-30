@@ -51,7 +51,7 @@
 
                 <tr>
                   <td>{{ ($index++)+1 }}</td>
-                  <td> <img src="{{ asset('images/SliderImages/' . $Slider->photo)  }}" alt="" width="150px"> </td>
+                  <td> <img src="{{  $Slider->photo  }}" alt="" width="150px"> </td>
                   <td>{{ $Slider->title ?? "--" }}</td>
                   <td>{{ $Slider->category->name  ?? "--"}}</td>
                   <td>{{ $Slider->Discount ?? "--" }}</td>

@@ -40,18 +40,28 @@
                 <div class="form-body">
                   <h4 class="form-section">General Option Info</h4>
                   <input type="hidden"  name="id" value="{{ $Options->id }}">
-
                   <div class="row">
 
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="projectinput2">Name</label>
-                        <input type="text" id="projectinput2" class="form-control" placeholder="Name" name="name" value="{{ $Options->name }}">
-                        @error('name')
-                        <span class="text-danger"> {{$message}}</span>
-                        @enderror
+                    @foreach($Options->translations as $OptionName)
+
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="projectinput2">Name:{{  $OptionName->locale }}</label>
+                          <input type="text" id="projectinput2" class="form-control" placeholder="{{  $OptionName->locale }}Name" name="{{  $OptionName->locale }}[name]" value="{{  $OptionName->name }}">
+                        </div>
+                          @error("$OptionName->locale.name")
+                          <span class="text-danger"> {{$message}}</span>
+                          @enderror
                       </div>
-                    </div>
+
+
+                    @endforeach
+
+                  </div>
+                  <div class="row">
+
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="projectinput1"> سعر  الاوبشن
@@ -66,6 +76,7 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="col-md-6"></div>
                   </div>
 
 

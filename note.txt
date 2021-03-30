@@ -1,17 +1,17 @@
 Admin :
 
-categories                                      ^^^^Not finished
-Brands                                          ^^^^^^^^^^^     لسه حذف الصورة بعد اتعديل
+categories                                      ^^^^^^^^^^^
+Brands                                          ^^^^^^^^^^^
 Tags                                            ^^^^^^^^^^^
-Settings                                        ^^^^Not finished
+Settings                                        Not finished
 
 
 Users                                           ^^^^^^^^^^^
 Edit Profile                                    ^^^^^^^^^^^
 
-Products                                        ^^^^^^^^^^^ صورة لازم + ajax
+Products                                        ^^^^^^^^^^^  ajax
 Attributes Product                              ^^^^^^^^^^^
-options Product                                 ^^^^^^^^^^^ price in multi product
+options Product                                 ^^^^^^^^^^^ 
 
 Connect us                                      ^^^^^^^^^^^
 Slider                                          ^^^^^^^^^^^
@@ -40,7 +40,7 @@ wishlist                                                    ^^^^^^^^^^^
 show Carts                                                  ^^^^^^^^^^^
 Reviews  (Rating + Review comment)                          ^^^^^^^^^^^
 
-checkout                                                    ^^^^^^^(coupon)
+checkout                                                    ^^^^^^^^^^^
 show Orders                                                 ^^^^^^^^^^^
 Home Page and search
 
@@ -54,7 +54,6 @@ __________________________________________
 
 
 special_price table alone
-(product,tag,option,Attributes) lang
 
   return $query->inRandomOrder()->take(4);
 

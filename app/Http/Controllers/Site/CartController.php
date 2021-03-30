@@ -11,8 +11,7 @@ class CartController extends Controller
 {
    public function Index(){
        $carts =Cart::content();
-      // $carts = Cart::instance('wishlist')->content();
-       return  $carts ;
+       //return  $carts ;
        return view('front\cart\index',compact('carts'));
    }
 
@@ -45,10 +44,11 @@ class CartController extends Controller
 
     public function delete(Request $request){
         $id =request('cartId');
+        $cartget =Cart::get($id);
+       $price = $cartget->price * $cartget->qty;
         $cart =Cart::remove($id);
-        //return  $carts ;
-        // $carts =Cart::content();
-        return response() -> json(['status' => true , 'wished' => true,'success'=>'تم الحذف','id'=>$id]);
+         $cartsCount =Cart::Count();
+        return response() -> json(['status' => true , 'wished' => true,'success'=>'تم الحذف','id'=>$id,'price'=>$price ,'cartsCount'=>$cartsCount]);
 
         //return  $carts ;
         //return view('front\cart\index',compact('carts'));

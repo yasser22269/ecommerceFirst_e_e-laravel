@@ -11,7 +11,7 @@
             </li>
              <li class="breadcrumb-item"><a href="{{ route('Attributes.index') }}">Attributes</a>
             </li>
-            <li class="breadcrumb-item active">Attributes Create
+            <li class="breadcrumb-item active">Attributes Edit
             </li>
           </ol>
         </div>
@@ -29,7 +29,7 @@
                   <h4 class="form-section">Attribute Info</h4>
                   <input type="hidden"  name="id" value="{{ $Attribute->id }}">
 
-                  <div class="row">
+                  {{-- <div class="row">
 
                     <div class="col-md-6">
                       <div class="form-group">
@@ -40,9 +40,27 @@
                         @enderror
                       </div>
                     </div>
+                  </div> --}}
+
+                  <div class="row">
+
+                    @foreach($Attribute->translations as $AttributeName)
+
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="projectinput2">Name:{{  $AttributeName->locale }}</label>
+                          <input type="text" id="projectinput2" class="form-control" placeholder="{{  $AttributeName->locale }}Name" name="{{  $AttributeName->locale }}[name]" value="{{  $AttributeName->name }}">
+                        </div>
+                          @error("$AttributeName->locale.name")
+                          <span class="text-danger"> {{$message}}</span>
+                          @enderror
+                      </div>
+
+
+                    @endforeach
+
                   </div>
-
-
 
                 <div class="form-actions">
                   <button type="submit" class="btn btn-primary">

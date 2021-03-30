@@ -17,7 +17,7 @@ class CreateOptionsTable extends Migration
             $table->bigIncrements('id');
             $table->Biginteger('attribute_id')->unsigned()->nullable();
             $table->integer('product_id')->unsigned()->nullable();
-            $table->decimal('price', 18, 4)->unsigned();
+            $table->decimal('price', 18, 4)->nullable();
 
             $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

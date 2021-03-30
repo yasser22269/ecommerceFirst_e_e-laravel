@@ -40,16 +40,34 @@
                         </div>
                       </div>
                     <div class="col-md-6">
-                      <div class="form-group">
+                      {{-- <div class="form-group">
                         <label for="projectinput2">Name</label>
                         <input type="text" id="projectinput2" class="form-control" placeholder="Name" name="name" value="{{ $Brand->name }}">
                         @error('name')
                         <span class="text-danger"> {{$message}}</span>
                         @enderror
-                      </div>
+                      </div> --}}
                     </div>
                   </div>
+                  <div class="row">
 
+                    @foreach($Brand->translations as $BrandName)
+
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="projectinput2">Name:{{  $BrandName->locale }}</label>
+                          <input type="text" id="projectinput2" class="form-control" placeholder="{{  $BrandName->locale }}Name" name="{{  $BrandName->locale }}[name]" value="{{  $BrandName->name }}">
+                        </div>
+                          @error("$BrandName->locale.name")
+                          <span class="text-danger"> {{$message}}</span>
+                          @enderror
+                      </div>
+
+
+                    @endforeach
+
+                  </div>
                   <div class="row">
                     <div class="col-md-6">
                         <img src="{{ asset( $Brand->photo) }}" alt="" width="150px">

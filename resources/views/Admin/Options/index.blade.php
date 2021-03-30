@@ -54,7 +54,7 @@
                   <td>{{ $Option->product->name ?? "--" }}</td>
                   <td>{{ $Option->attribute->name ?? "--" }}</td>
                   <td>{{ $Option->name ?? "--" }}</td>
-                  <td>{{ $Option->price }}</td>
+                  <td>{{ $Option->price ?? '--' }}</td>
                   <td>
                   <a href="{{ route('Options.edit',$Option->id) }}">
                         <button class="btn btn-info btn-sm round  box-shadow-2 px-1"type="button" > <i class="la la-edit la-sm"></i> Edit </button>

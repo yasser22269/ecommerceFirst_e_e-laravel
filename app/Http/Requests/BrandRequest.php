@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Rules\UniqueCategoryName;
 use Illuminate\Foundation\Http\FormRequest;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class BrandRequest extends FormRequest
 {
@@ -24,9 +25,12 @@ class BrandRequest extends FormRequest
      */
     public function rules()
     {
+        // $data =[];
+
         return [
-            // |unique:brand_translations,name,' . $this->id
-             'name' => 'required',
+            //  "ar.name" => 'required|string',
+            //  "en.name" => 'required|string',
+             "*.name" => 'required|string',
             'photo' => 'mimes:jpg,jpeg,png',
         ];
     }

@@ -26,10 +26,11 @@ class OptionRequest extends FormRequest
     {
         return [
             // |unique:brand_translations,name,' . $this->id
-            'name' => 'required|max:100',
+            'ar.name' => 'required|max:100',
+            'en.name' => 'required|max:100',
             'attribute_id' => 'required|numeric|exists:attributes,id',
             'product_id' => 'required|numeric|exists:products,id',
-            'price' => 'required|min:0|numeric',
+          //  'price' => 'min:0|numeric',
 
         ];
     }

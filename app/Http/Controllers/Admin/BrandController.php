@@ -22,7 +22,7 @@ class BrandController extends Controller
     {
         $brands = Brand::paginate(PAGINATION_COUNT);
         // translatedIn(app() -> getLocale())->
-        // return Request::has('brands');
+        //return $brands;
         return view('Admin.brands.index',compact('brands'));
     }
 
@@ -45,6 +45,7 @@ class BrandController extends Controller
      */
     public function store(BrandRequest $request)
     {
+        //return $request;
         try{
 
        DB::beginTransaction();
@@ -65,7 +66,7 @@ class BrandController extends Controller
             $Brand =  Brand::create($request->except('_token','photo'));
 
             //save translations
-            $Brand->name = $request->name;
+          //  $Brand->name = $request->name;
             $Brand->photo = $fileName;
             $Brand->save();
 
@@ -73,7 +74,7 @@ class BrandController extends Controller
            DB::commit();
               return redirect()->route('Brand.index')->with(['success' => 'تم ألاضافة بنجاح']);
 
-        }catch (\Exception $ex) {
+       }catch (\Exception $ex) {
             DB::rollback();
             return redirect()->route('Brand.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
         }
@@ -89,6 +90,8 @@ class BrandController extends Controller
     public function edit($id)
     {
         $Brand = Brand::findOrFail($id);
+      //  return $Brand;
+
         return view('Admin.brands.edit',compact("Brand"));
 
     }
@@ -128,7 +131,7 @@ class BrandController extends Controller
           $Brand->update($request->except('_token', 'id', 'photo'));
 
         //save translations
-        $Brand->name = $request->name;
+       // $Brand->name = $request->name;
         $Brand->save();
 
 
@@ -160,11 +163,11 @@ class BrandController extends Controller
         }
     }
 
-    $image_path = public_path("\\"). $Brand->photo;
-        //return  $Brand->photo;
+    // $image_path = public_path("\\"). $Brand->photo;
+      //  return  $Brand->photo;
     // Value is not URL but directory file path
-        if(File::exists($image_path) && $Brand->photo != "images/brands/defualt.png") {
-            File::delete($image_path);
+        if(File::exists($Brand->photo) && $Brand->photo != "images/brands/defualt.png") {
+            File::delete($Brand->photo);
         }
         // return  $BrandNames;
         $Brand->delete();

@@ -10,7 +10,7 @@
             <li class="breadcrumb-item"><a href="{{ route('Admin') }}">Admin</a>
             </li>
              <li class="breadcrumb-item"><a href="{{ route('Category.index') }}">Categories</a>
-            </li>  
+            </li>
             <li class="breadcrumb-item active">categories Create
             </li>
           </ol>
@@ -26,7 +26,7 @@
                 @csrf
                 <div class="form-body">
                   <h4 class="form-section">category Info</h4>
-                
+
 
                   <div class="row">
                     <div class="col-md-6">
@@ -39,16 +39,32 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <div class="form-group">
+                      {{-- <div class="form-group">
                         <label for="projectinput2">Name</label>
                         <input type="text" id="projectinput2" class="form-control" placeholder="Name" name="name">
                         @error('name')
                         <span class="text-danger"> {{$message}}</span>
                         @enderror
-                      </div>
+                      </div> --}}
                     </div>
                   </div>
+                  <div class="row">
 
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="projectinput2">Name:{{  $localeCode }}</label>
+                          <input type="text" id="projectinput2" class="form-control" placeholder="{{  $localeCode }}Name" name="{{  $localeCode }}[name]">
+                        </div>
+                          @error("$localeCode.name")
+                          <span class="text-danger"> {{$message}}</span>
+                          @enderror
+                      </div>
+
+                    @endforeach
+
+                  </div>
                   <div class="row">
                     <div class="col-md-12">
                             <label for="switcheryColor4"
@@ -58,12 +74,12 @@
                                    id="switcheryColor4"
                                    class="switchery" data-color="success"
                                    checked/>
-                            
+
                             @error("is_active")
                             <span class="text-danger">{{$message }}</span>
                             @enderror
                         </div>
-                        
+
 
                         <div class="col-md-3">
                             <div class="form-group mt-1">
@@ -101,12 +117,24 @@
                   <div class="row parent-id" style="display: none">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label for="projectinput5">parent - Name</label>
+                        <label for="projectinput5"> parent - Name</label>
                         <select  name="parent_id" class="form-control">
-                          <option selected></option>
-                          @if($categories && $categories -> count() > 0)
-                            @foreach ($categories as  $category)
-                            <option value="{{ $category->id }}" >{{ $category->name }}</option>
+                          @if($categoriesParent && $categoriesParent -> count() > 0)
+                            @foreach ($categoriesParent as  $category1)
+                            <option value="{{ $category1->id }}" >{{ $category1->name }}</option>
+                          @if($category1->childrens && $category1->childrens -> count() > 0)
+                               @foreach ($category1->childrens as  $category2)
+                              <option value="{{ $category2->id }}" >{{ $category1->name }}--{{ $category2->name }}</option>
+                                @if($category2->childrens && $category2->childrens -> count() > 0)
+                                    @foreach ($category2->childrens as  $category3)
+                                    <option value="{{ $category2->id }}" >{{ $category1->name }}--{{ $category2->name }} -- {{ $category3->name }}</option>
+                                    @endforeach
+
+                                @endif
+
+                                @endforeach
+                                 @endif
+                             {{-- </optgroup> --}}
                             @endforeach
                           @endif
                         </select>
@@ -115,7 +143,7 @@
                       <span class="text-danger"> {{$message}}</span>
                       @enderror
                     </div>
-                   
+
                   </div>
                 <div class="form-actions">
                   <button type="submit" class="btn btn-primary">
@@ -123,7 +151,7 @@
                   </button>
                 </div>
               </form>
-        
+
           </div>
          </div>
 

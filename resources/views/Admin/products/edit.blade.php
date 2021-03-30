@@ -21,7 +21,7 @@
             </li>
              <li class="breadcrumb-item"><a href="{{ route('Products.index') }}">products </a>
             </li>
-            <li class="breadcrumb-item active">products  Create
+            <li class="breadcrumb-item active">products  Edit
             </li>
           </ol>
         </div>
@@ -65,53 +65,81 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="projectinput2">Name</label>
-                        <input type="text" id="projectinput2" class="form-control" placeholder="Name" name="name" value="{{ $Products->name }}">
-                        @error('name')
-                        <span class="text-danger"> {{$message}}</span>
-                        @enderror
-                      </div>
+
                     </div>
+                  </div>
+                  <div class="row">
+
+                    @foreach($Products->translations as $ProductNameName)
+
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="projectinput2">Name:{{  $ProductNameName->locale }}</label>
+                          <input type="text" id="projectinput2" class="form-control" placeholder="{{  $ProductNameName->locale }}Name" name="{{  $ProductNameName->locale }}[name]" value="{{  $ProductNameName->name }}">
+                        </div>
+                          @error("$ProductNameName->locale.name")
+                          <span class="text-danger"> {{$message}}</span>
+                          @enderror
+                      </div>
+
+
+                    @endforeach
+
+                  </div>
+
+                  <div class="row">
+
+                    @foreach($Products->translations as $ProductNameName)
+
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="projectinput2">description:{{  $ProductNameName->locale }}</label>
+
+                          <textarea  name="{{  $ProductNameName->locale }}[description]" id="description"
+                            class="form-control"
+                            placeholder=" description"
+                                >{{  $ProductNameName->description }}</textarea>
+                        </div>
+                          @error("$ProductNameName->locale.description")
+                          <span class="text-danger"> {{$message}}</span>
+                          @enderror
+                      </div>
+
+
+                    @endforeach
+
+                  </div>
+                  <div class="row">
+
+                    @foreach($Products->translations as $ProductNameName)
+
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="projectinput2">short description:{{  $ProductNameName->locale }}</label>
+
+                          <textarea  name="{{  $ProductNameName->locale }}[short_description]" id="short_description"
+                          class="form-control"
+                          placeholder="short description"
+                              >{{  $ProductNameName->short_description }}</textarea>
+                        </div>
+                          @error("$ProductNameName->locale.short_description")
+                          <span class="text-danger"> {{$message}}</span>
+                          @enderror
+                      </div>
+
+
+                    @endforeach
+
                   </div>
 
 
-                  <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="projectinput1"> وصف المنتج
-                            </label>
-                            <textarea  name="description" id="description"
-                                   class="form-control"
-                                   placeholder="description"
-                            >{{ $Products->description }}</textarea>
-
-                            @error("description")
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="projectinput1"> الوصف المختصر
-                            </label>
-                            <textarea  name="short_description" id="short-description"
-                                       class="form-control"
-                                       placeholder=""
-                            >{{ $Products->short_description }}</textarea>
-
-                            @error("short_description")
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-                    </div>
-
-                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="projectinput1"> سعر  المنتج
+                            <label for="projectinput1"> Price
                             </label>
                             <input type="number" id="price"
                                    class="form-control"
@@ -236,7 +264,7 @@
                 @method('put')
                 <div class="form-body">
                   <h4 class="form-section">Price Product Info</h4>
-                  <input type="hidden"  name="id" value="{{ $Products->id }}">
+                  <input type="hidden"  name="product_id" value="{{ $Products->id }}">
 
                   <div class="row">
                     <div class="col-md-6">
@@ -266,7 +294,7 @@
                             </label>
                             <input type="number"
                                    class="form-control"
-                                   value="{{ $Products->special_price  ?? old('special_price') }}"
+                                   value="{{ $offer->special_price  ?? old('special_price') }}"
                                    name="special_price">
                             @error("special_price")
                             <span class="text-danger">{{$message}}</span>
@@ -280,8 +308,8 @@
                             <select name="special_price_type" class=" form-control" >
                                 <optgroup label="من فضلك أختر النوع ">
                                     <option></option>
-                                    <option value="percent" {{ $Products->special_price_type =="percent" ? "Selected" : '' }}>precent</option>
-                                    <option value="fixed"  {{ $Products->special_price_type =="fixed" ? "Selected" : '' }}>fixed</option>
+                                    <option value="percent" {{ $offer->special_price_type =="percent" ? "Selected" : '' }}>precent</option>
+                                    <option value="fixed"  {{ $offer->special_price_type =="fixed" ? "Selected" : '' }}>fixed</option>
                                 </optgroup>
                             </select>
                             @error('special_price_type')
@@ -300,12 +328,13 @@
                             <label for="projectinput1"> تاريخ البداية
                             </label>
 
-                            <input type="date" id="price"
+                            <input type="date"
                                    class="form-control"
-                                   value="{{ ($Products->special_price_start) ? date_format($Products->special_price_start ,'Y-m-d') : '' }}"
+                                   value="{{ $offer->special_price_start ??
+                                   $offer->special_price_start  }}"
                                    name="special_price_start"
                                    >
-                           {{ ($Products->special_price_end) ? date_format($Products->special_price_start ,'Y-m-d') : ''}}
+                           {{-- {{ $offer->special_price_start ?? date_format($offer->special_price_start ,'Y-m-d') }} --}}
                             @error('special_price_start')
                             <span class="text-danger"> {{$message}}</span>
                             @enderror
@@ -316,11 +345,13 @@
                         <div class="form-group">
                             <label for="projectinput1"> تاريخ البداية
                             </label>
-                            <input type="date" id="price"
+                            <input type="date"
                                    class="form-control"
-                                   value="{{ ($Products->special_price_end) ? date_format($Products->special_price_end ,'Y-m-d') : '' }}"
+                                   value="{{ $offer->special_price_end ??
+                                    $offer->special_price_end }}"
                                    name="special_price_end">
-                                   {{ ($Products->special_price_start) ?date_format($Products->special_price_end ,'Y-m-d') : '' }}
+                                   {{-- {{ $offer->special_price_end ??
+                                    date_format($offer->special_price_end ,'Y-m-d' )  }} --}}
                             @error('special_price_end')
                             <span class="text-danger"> {{$message}}</span>
                             @enderror
@@ -367,10 +398,7 @@
 
 
                     <div class="form-actions">
-                        <button type="button" class="btn btn-warning mr-1"
-                                onclick="history.back();">
-                            <i class="ft-x"></i> تراجع
-                        </button>
+
                         <button type="submit" class="btn btn-primary">
                             <i class="la la-check-square-o"></i> تحديث
                         </button>
@@ -384,11 +412,10 @@
 
 
         <div class="row">
-            @foreach ($Products->Images as $k => $Product)
+            @foreach ($Products->Images as  $Product)
             <div class="col-md-3" style="margin-bottom: 20px">
 
-            <form
-            action="{{route('admin.products.imagedeleteId',$Product->id)}}"
+            <form action="{{route('admin.products.imagedeleteId',$Product->id)}}"
             method="POST" enctype="multipart/form-data" >
               @csrf
 
@@ -429,7 +456,7 @@
                                     <input type="text" id="sku"
                                             class="form-control"
                                             placeholder="  "
-                                            value="{{$Products->sku}}"
+                                            value="{{$ManageStock->sku}}"
                                             name="sku">
                                     @error("sku")
                                     <span class="text-danger">{{$message}}</span>
@@ -444,8 +471,8 @@
                                     </label>
                                     <select name="in_stock" class="form-control" >
 
-                                            <option {{($Products->in_stock) ==0 ? "Selected " :'' }}value="0">غير متاح </option>
-                                            <option {{($Products->in_stock) ==1 ? "Selected " :'' }}value="1">متاح</option>
+                                            <option {{($ManageStock->in_stock) ==0 ? "Selected " :'' }}value="0">غير متاح </option>
+                                            <option {{($ManageStock->in_stock) ==1 ? "Selected " :'' }}value="1">متاح</option>
 
 
                                     </select>
@@ -466,8 +493,8 @@
                                     <label for="projectinput1">تتبع المستودع
                                     </label>
                                     <select name="manage_stock" class="form-control" id="manageStock">
-                                            <option  {{($Products->manage_stock) ==0 ? "Selected " :'' }}value="0" >عدم اتاحه التتبع</option>
-                                            <option {{($Products->manage_stock) ==1 ? "Selected " :'' }}value="1">اتاحة التتبع</option>
+                                            <option  {{($ManageStock->manage_stock) ==0 ? "Selected " :'' }}value="0" >عدم اتاحه التتبع</option>
+                                            <option {{($ManageStock->manage_stock) ==1 ? "Selected " :'' }}value="1">اتاحة التتبع</option>
 
 
                                     </select>
@@ -477,14 +504,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6" style="{{($Products->manage_stock) ==0 ? 'display:none;' :'' }} "  id="qtyDiv">
+                            <div class="col-md-6" style="{{($ManageStock->manage_stock) ==0 ? 'display:none;' :'' }} "  id="qtyDiv">
                                 <div class="form-group">
                                     <label for="projectinput1">الكمية
                                     </label>
                                     <input type="text" id="sku"
                                             class="form-control"
                                             placeholder="  "
-                                            value="{{$Products->qty}}"
+                                            value="{{$ManageStock->qty}}"
                                             name="qty">
                                     @error("qty")
                                     <span class="text-danger">{{$message}}</span>
@@ -496,10 +523,7 @@
 
 
                     <div class="form-actions">
-                        <button type="button" class="btn btn-warning mr-1"
-                                onclick="history.back();">
-                            <i class="ft-x"></i> تراجع
-                        </button>
+
                         <button type="submit" class="btn btn-primary">
                             <i class="la la-check-square-o"></i> تحديث
                         </button>

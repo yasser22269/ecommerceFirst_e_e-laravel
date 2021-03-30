@@ -31,22 +31,31 @@
                 <div class="form-body">
                   <h4 class="form-section">Options Info</h4>
 
+                  <div class="row">
+
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+
+
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="projectinput2">اسم  الاوبشن:{{  $localeCode }}</label>
+                          <input type="text" id="projectinput2" class="form-control" placeholder="{{  $localeCode }}Name" name="{{  $localeCode }}[name]">
+                        </div>
+                          @error("$localeCode.name")
+                          <span class="text-danger"> {{$message}}</span>
+                          @enderror
+                      </div>
+
+
+
+
+                    @endforeach
+
+                  </div>
 
                   <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="projectinput1"> اسم  الاوبشن
-                            </label>
-                            <input type="text" id="name"
-                                   class="form-control"
-                                   placeholder="  "
-                                   value="{{old('name')}}"
-                                   name="name">
-                            @error("name")
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-                    </div>
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="projectinput1"> سعر  الاوبشن
@@ -61,7 +70,7 @@
                             @enderror
                         </div>
                     </div>
-
+                    <div class="col-md-6"></div>
                 </div>
 
 

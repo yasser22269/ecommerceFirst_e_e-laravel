@@ -48,7 +48,7 @@ class SliderImagesController extends Controller
     public function store(SliderImagesRequest $request)
     {
     //    return $request;
-        // try{
+        try{
 
           DB::beginTransaction();
 
@@ -64,7 +64,7 @@ class SliderImagesController extends Controller
             $SliderImages =  SliderImages::create( $request->except('_token','name'));
 
             //save translations
-            $SliderImages->title = $request->name;
+           // $SliderImages->title = $request->name;
             $SliderImages->photo = $fileName;
             $SliderImages->save();
 
@@ -72,10 +72,10 @@ class SliderImagesController extends Controller
            DB::commit();
               return redirect()->route('Slider.index')->with(['success' => 'تم ألاضافة بنجاح']);
 
-        // }catch (\Exception $ex) {
-        //     DB::rollback();
-        //     return redirect()->route('Slider.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
-        // }
+        }catch (\Exception $ex) {
+            DB::rollback();
+            return redirect()->route('Slider.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        }
 
     }
 
@@ -104,20 +104,19 @@ class SliderImagesController extends Controller
     public function update(SliderImagesRequest $request,$id)
     {
         //   return $request->photo;
-        // try{
+        try{
 
 
             DB::beginTransaction();
             $SliderImages = SliderImages::find($id);
             if ($request->has('photo')) {
 
-                $fileName = uploadImage('SliderImages', $request->photo);
-
-                 $image_path = public_path("images/SliderImages/"). $SliderImages->photo;
-                //  return $image_path;
-                if(File::exists($image_path) ) {
-                    File::delete($image_path);
+                $photo = str_replace('http://localhost:8000/', '',  $SliderImages->photo);
+                if (File::exists($photo)) {
+                File::delete($photo);
                 }
+
+                $fileName = uploadImage('SliderImages', $request->photo);
             SliderImages::where('id', $id)
                     ->update([
                         'photo' => $fileName,
@@ -128,17 +127,17 @@ class SliderImagesController extends Controller
           $SliderImages->update($request->except('_token', 'id', 'photo','_method','name'));
 
         //save translations
-        $SliderImages->title = $request->name;
-        $SliderImages->save();
+       // $SliderImages->title = $request->name;
+       // $SliderImages->save();
 
 
         DB::commit();
         return redirect()->route('Slider.index')->with(['success' => 'تم التعديل بنجاح']);
 
-        // }catch (\Exception $ex) {
-        //     DB::rollback();
-        //     return redirect()->route('Slider.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
-        // }
+        }catch (\Exception $ex) {
+            DB::rollback();
+            return redirect()->route('Slider.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        }
     }
 
     /**
@@ -159,12 +158,10 @@ class SliderImagesController extends Controller
                  $SliderImagesName->delete();
         }
     }
-
-    $image_path = public_path("images/SliderImages/"). $SliderImages->photo;
-                //  return $image_path;
-                if(File::exists($image_path) ) {
-                    File::delete($image_path);
-                }
+    $photo = str_replace('http://localhost:8000/', '',  $SliderImages->photo);
+    if (File::exists($photo)) {
+    File::delete($photo);
+    }
         // return  $SliderImagesNames;
         $SliderImages->delete();
        return redirect()->route('Slider.index')->with(['success' => 'تم الحذف بنجاح']);

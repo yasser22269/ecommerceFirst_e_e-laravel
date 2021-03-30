@@ -54,8 +54,8 @@ class OptionController extends Controller
             $Option =  Option::create($request->except('_token'));
 
             //save translations
-            $Option->name = $request->name;
-            $Option->save();
+           // $Option->name = $request->name;
+          //  $Option->save();
 
            // return $Option;
            DB::commit();
@@ -101,8 +101,8 @@ class OptionController extends Controller
           $Option->update($request->all());
 
         //save translations
-        $Option->name = $request->name;
-        $Option->save();
+       // $Option->name = $request->name;
+       // $Option->save();
 
 
         DB::commit();

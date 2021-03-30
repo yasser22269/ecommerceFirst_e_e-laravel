@@ -11,7 +11,7 @@
             </li>
              <li class="breadcrumb-item"><a href="{{ route('Category.index') }}">Categories</a>
             </li>
-            <li class="breadcrumb-item active">categories Create
+            <li class="breadcrumb-item active">categories Edit
             </li>
           </ol>
         </div>
@@ -40,16 +40,34 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <div class="form-group">
+                      {{-- <div class="form-group">
                         <label for="projectinput2">Name</label>
                         <input type="text" id="projectinput2" class="form-control" placeholder="Name" name="name" value="{{ $category->name }}">
                         @error('name')
                         <span class="text-danger"> {{$message}}</span>
                         @enderror
-                      </div>
+                      </div> --}}
                     </div>
                   </div>
+                  <div class="row">
 
+                    @foreach($category->translations as $categoryName)
+
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="projectinput2">Name:{{  $categoryName->locale }}</label>
+                          <input type="text" id="projectinput2" class="form-control" placeholder="{{  $categoryName->locale }}Name" name="{{  $categoryName->locale }}[name]" value="{{  $categoryName->name }}">
+                        </div>
+                          @error("$categoryName->locale.name")
+                          <span class="text-danger"> {{$message}}</span>
+                          @enderror
+                      </div>
+
+
+                    @endforeach
+
+                  </div>
                   <div class="row">
                     <div class="col-md-12">
                             <label for="switcheryColor4"
@@ -103,23 +121,33 @@
                   </div>
                   <div class="row parent-id" style="{{ $category->parent_id == null ? 'display: none' : ''}}">
                     <div class="col-md-12">
-                      <div class="form-group">
-                        <label for="projectinput5"> parent - Name</label>
-                        <select  name="parent_id" class="form-control">
-                            @if($category->parent_id == null)
-                            <option selected></option>
+                        <div class="form-group">
+                          <label for="projectinput5"> parent - Name</label>
+                          <select  name="parent_id" class="form-control">
+                            @if($categoriesParent && $categoriesParent -> count() > 0)
+                              @foreach ($categoriesParent as  $category1)
+                              <option   {{  $category1->id == $category->parent_id ? 'selected': "" }} value="{{ $category1->id }}" >{{ $category1->name }}</option>
+                            @if($category1->childrens && $category1->childrens -> count() > 0)
+                                 @foreach ($category1->childrens as  $category2)
+                                <option   {{  $category2->id == $category->parent_id ? 'selected': "" }} value="{{ $category2->id }}" >{{ $category1->name }}--{{ $category2->name }}</option>
+                                  @if($category2->childrens && $category2->childrens -> count() > 0)
+                                      @foreach ($category2->childrens as  $category3)
+                                      <option   {{  $category3->id == $category->parent_id ? 'selected': "" }} value="{{ $category2->id }}" >{{ $category1->name }}--{{ $category2->name }} -- {{ $category3->name }}</option>
+                                      @endforeach
+
+                                  @endif
+
+                                  @endforeach
+                                   @endif
+                               {{-- </optgroup> --}}
+                              @endforeach
                             @endif
-                          @if($categories && $categories -> count() > 0)
-                            @foreach ($categories as  $categoryname)
-                            <option value="{{ $categoryname->id }}"  {{  $categoryname->id == $category->parent_id ? 'selected': "" }} >{{ $categoryname->name }}</option>
-                            @endforeach
-                          @endif
-                        </select>
+                          </select>
+                        </div>
+                        @error('parent_id')
+                        <span class="text-danger"> {{$message}}</span>
+                        @enderror
                       </div>
-                      @error('parent_id')
-                      <span class="text-danger"> {{$message}}</span>
-                      @enderror
-                    </div>
 
                   </div>
                 <div class="form-actions">

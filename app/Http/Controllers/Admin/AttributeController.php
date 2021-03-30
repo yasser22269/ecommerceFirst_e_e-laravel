@@ -51,8 +51,8 @@ class AttributeController extends Controller
             $Attribute =  Attribute::create($request->except('_token'));
 
             //save translations
-            $Attribute->name = $request->name;
-            $Attribute->save();
+          //  $Attribute->name = $request->name;
+           // $Attribute->save();
 
            // return $Attribute;
            DB::commit();
@@ -91,13 +91,13 @@ class AttributeController extends Controller
 
             DB::beginTransaction();
         $Attribute = Attribute::find($id);
-       
+
           // return $request;
           $Attribute->update($request->all());
 
         //save translations
-        $Attribute->name = $request->name;
-        $Attribute->save();
+      //  $Attribute->name = $request->name;
+      //  $Attribute->save();
 
 
         DB::commit();

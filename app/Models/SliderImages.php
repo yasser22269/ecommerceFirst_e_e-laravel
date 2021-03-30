@@ -9,10 +9,10 @@ class SliderImages extends Model
 {
     protected $guarded = [];
 
-    // public function getPhotoAttribute($val)
-    // {
-    //     return ($val !== null) ? asset('images/SliderImages/' . $val) : "";
-    // }
+    public function getPhotoAttribute($val)
+    {
+        return ($val !== null) ? asset('images/SliderImages/' . $val) : "";
+    }
     use Translatable;
 
     /**

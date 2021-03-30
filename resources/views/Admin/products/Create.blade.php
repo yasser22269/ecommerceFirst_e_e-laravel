@@ -26,31 +26,49 @@
 
       <div class="card">
           <div class="container">
-          <form class="form" method="POST" action="{{ route('Products.store') }}">
+          <form class="form" method="POST" action="{{ route('Products.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-body">
                   <h4 class="form-section">Products Info</h4>
 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="projectinput1">One Image
+                                </label>
+                                <input type="file"
+                                       class="form-control"
+                                       placeholder="  "
+                                       value="{{old('photo')}}"
+                                       name="photo">
+                                @error("photo")
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                  <div class="row">
+
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="projectinput2">Name:{{  $localeCode }}</label>
+                          <input type="text" id="projectinput2" class="form-control" placeholder="{{  $localeCode }}Name" name="{{  $localeCode }}[name]">
+                        </div>
+                          @error("$localeCode.name")
+                          <span class="text-danger"> {{$message}}</span>
+                          @enderror
+                      </div>
+
+                    @endforeach
+
+                  </div>
 
                   <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="projectinput1"> اسم  المنتج
-                            </label>
-                            <input type="text" id="name"
-                                   class="form-control"
-                                   placeholder="  "
-                                   value="{{old('name')}}"
-                                   name="name">
-                            @error("name")
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="projectinput1"> اسم بالرابط
+                            <label for="projectinput1">Slug
                             </label>
                             <input type="text"
                                    class="form-control"
@@ -62,44 +80,55 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="col-md-6"></div>
                 </div>
+
+
+                  <div class="row">
+
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="projectinput2">description:{{  $localeCode }}</label>
+                        <textarea  name="{{  $localeCode }}[description]" id="description"
+                        class="form-control"
+                        placeholder="{{  $localeCode }}:Description"
+                         >{{old('description')}}</textarea>
+                          @error("$localeCode.description")
+                          <span class="text-danger"> {{$message}}</span>
+                          @enderror
+                        </div>
+                      </div>
+
+                    @endforeach
+
+                  </div>
+                  <div class="row">
+
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="projectinput2">short description:{{  $localeCode }}</label>
+                        <textarea  name="{{  $localeCode }}[short_description]" id="description"
+                        class="form-control"
+                        placeholder="{{  $localeCode }}:short Description"
+                         >{{old('short_description')}}</textarea>
+                          @error("$localeCode.short_description")
+                          <span class="text-danger"> {{$message}}</span>
+                          @enderror
+                        </div>
+                      </div>
+
+                    @endforeach
+
+                  </div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="projectinput1"> وصف المنتج
-                            </label>
-                            <textarea  name="description" id="description"
-                                   class="form-control"
-                                   placeholder="  "
-                            >{{old('description')}}</textarea>
-
-                            @error("description")
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="projectinput1"> الوصف المختصر
-                            </label>
-                            <textarea  name="short_description" id="short-description"
-                                       class="form-control"
-                                       placeholder=""
-                            >{{old('short_description')}}</textarea>
-
-                            @error("short_description")
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="projectinput1"> سعر  المنتج
+                            <label for="projectinput1"> Price
                             </label>
                             <input type="number" id="price"
                                    class="form-control"
