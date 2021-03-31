@@ -33,7 +33,7 @@
             display:block;
         }
 
-        
+
     </style>
 </head>
 
@@ -75,16 +75,13 @@
                     <!-- Header Advance Search Start -->
                     <div class="header-advance-search">
 
-                        <form action="#">
-                            <div class="input"><input type="text" placeholder="Search your product"></div>
-                            <div class="select">
-                                <select class="nice-select">
-                                    <option>All Categories</option>
-
+                        <form action="{{ route('product.search') }}" method="POST">
+                            @csrf
+                            <div class="input"><input type="text" name="name" placeholder="Search your product"></div>
+                            <div class="select" >
+                                <select class="nice-select" name='category_id'>
                                     @foreach ($categories as $category)
-
-                                    <option>{{ $category->name }}</option>
-
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                                    @endforeach
 
                                 </select>

@@ -28,7 +28,6 @@ class Product extends Model
         'slug',
         'sku',
         'price',
-
         'is_active'
     ];
 
@@ -109,13 +108,18 @@ class Product extends Model
     {
         return $this->belongsToMany(Order::class);
     }
+
+    public function orderProduct()
+    {
+        return $this->hasMany(OrderProduct::class);
+    }
     public function Offer()
     {
-        return $this->hasMany(Offer::class,'offer_id');
+        return $this->hasOne(Offer::class,'product_id');
     }
     public function ManageStock()
     {
-        return $this->hasMany(ManageStock::class,'manage_stocks_id');
+        return $this->hasOne(ManageStock::class,'product_id');
     }
 
 }

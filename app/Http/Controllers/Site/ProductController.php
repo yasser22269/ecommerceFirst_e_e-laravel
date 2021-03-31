@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductTranslation;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -96,9 +97,21 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function search(Request $request)
     {
-        //
+      $productid= ProductTranslation::select('product_id')->where('name','like','%'. $request->name .'%')->orWhere('description','like','%'. $request->name .'%')->orWhere('short_description','like','%'. $request->name .'%')->get();
+
+      $products = Product::whereIn("id",$productid)->paginate(PAGINATION_COUNT);
+      
+        if(!$products){
+            $products = Product::translatedIn(app() -> getLocale())->paginate(PAGINATION_COUNT);
+            return view('front.products.index',compact('products','slug'))
+            ->with(['success' => 'لا يوجد منتج بهذا الشكل']);
+        }
+
+        return view('front.products.search',compact('products'));
+
+
     }
 
     /**

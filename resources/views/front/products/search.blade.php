@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','products')
+@section('title','search products')
 
 @section('content')
 
@@ -11,7 +11,7 @@
         <div class="col-lg-12 col-12 order-lg-2 d-flex align-items-center justify-content-center">
             <div class="page-banner">
                 <div class="page-banner">
-                    <h1>products</h1>
+                    <h1>search products</h1>
                     <div class="breadcrumb">
                         <ul>
                             <li><a href="{{ route('home') }}">HOME</a></li>
@@ -229,15 +229,15 @@
                                     <span class="availability">
                                         In Stock :
                                         @if(  $product->ManageStock->in_stock == 1  )
-                                            <span>Availability</span>
+                                             <span>Availability</span>
                                             @if(  $product->ManageStock->manage_stock == 1  )
 
                                         <h5 >Is available : <span>{{ $product->ManageStock->qty }}</span></h5>
 
-                                            @endif
+                                             @endif
 
                                         @else
-                                        <span  >Not Availability</span>
+                                           <span  >Not Availability</span>
 
                                         @endif
                                     </span>

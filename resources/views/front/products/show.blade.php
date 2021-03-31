@@ -132,11 +132,11 @@
 
 
                         <h5 class="price">
-                            @if (   $product->special_price  )
+                            @if (   $product->Offer->special_price  )
                             {{-- && $product->special_price_end > now() --}}
                                 <span class="old">${{ round(  $product->price,2) }}</span>
                             @endif
-                            ${{ ($product->special_price !=0 ) ? round($product->special_price,2) :  round($product->price,2) }}
+                            ${{ ($product->Offer->special_price !=0 ) ? round($product->Offer->special_price,2) :  round($product->price,2) }}
 
 
                         </h5>
@@ -175,11 +175,11 @@
 
                         <h5 >
                             In Stock :
-                            @if(  $product->in_stock == 1  )
+                            @if(  $product->ManageStock->in_stock == 1  )
                                  <span>Availability</span>
-                                @if(  $product->manage_stock == 1  )
+                                @if(  $product->ManageStock->manage_stock == 1  )
 
-                            <h5 >Is available : <span>{{ $product->qty }}</span></h5>
+                            <h5 >Is available : <span>{{ $product->ManageStock->qty }}</span></h5>
 
                                  @endif
 
@@ -427,17 +427,9 @@
 
 								<h3>Add your Comments</h3>
 								<form action="{{ route('storeComment') }}" method="POST">
+                                    @csrf
 								    <div class="ratting-form row">
-										{{-- <div class="col-12 mb-15">
-											<h5>Rating:</h5>
-											<div class="ratting-star fix">
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-											</div>
-										</div> --}}
+
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
 
                                         <div class="col-12 mb-15">

@@ -17,20 +17,19 @@ class GlobalData
      */
     public function handle($request, Closure $next)
     {
-        // $userCompany    = Auth::user()->company_id;
-        // $userEmployee = Auth::user()->employee_id;
+        // start categories And childrens
         $categories = Category::where('parent_id',Null)->select('id', 'slug')->with(['childrens'=>function($q){
             $q->select('id', 'parent_id', 'slug');
             $q->with(['childrens'=>function($q){
                 $q->select('id', 'parent_id','slug');
             }]);
-        }])->translatedIn(app() -> getLocale())->limit(10)->get();
+        }])->translatedIn(app() -> getLocale())->limit(7)->get();
+        // End categories And childrens
 
-        // $data =[
-        //     'categories' => $categories,
-        // ];
-        // return $data;
-           View::share([
+
+     
+
+        View::share([
                'categories'=> $categories,
 
                ]);

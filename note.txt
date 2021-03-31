@@ -1,20 +1,20 @@
 Admin :
 
-categories                                      ^^^^^^^^^^^
-Brands                                          ^^^^^^^^^^^
-Tags                                            ^^^^^^^^^^^
-Settings                                        Not finished
+categories                                                   ^^^^^^^^^^^
+Brands                                                       ^^^^^^^^^^^
+Tags                                                         ^^^^^^^^^^^
+Settings                                                     Not finished
 
 
-Users                                           ^^^^^^^^^^^
-Edit Profile                                    ^^^^^^^^^^^
+Users                                                        ^^^^^^^^^^^
+Edit Profile                                                 ^^^^^^^^^^^
 
-Products                                        ^^^^^^^^^^^  ajax
-Attributes Product                              ^^^^^^^^^^^
-options Product                                 ^^^^^^^^^^^ 
+Products                                                     ^^^^^^^^^^^  ajax
+Attributes Product                                           ^^^^^^^^^^^
+options Product                                              ^^^^^^^^^^^
 
-Connect us                                      ^^^^^^^^^^^
-Slider                                          ^^^^^^^^^^^
+Connect us                                                   ^^^^^^^^^^^
+Slider                                                       ^^^^^^^^^^^
 
 
 
@@ -42,7 +42,7 @@ Reviews  (Rating + Review comment)                          ^^^^^^^^^^^
 
 checkout                                                    ^^^^^^^^^^^
 show Orders                                                 ^^^^^^^^^^^
-Home Page and search
+Home Page and search                                        ^^^^^^^^^^^
 
 
 

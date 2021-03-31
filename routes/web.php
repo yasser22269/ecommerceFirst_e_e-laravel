@@ -56,6 +56,7 @@ Route::group([
 
            Route::get('products/{slug}', 'ProductController@index')->name('products.index');
            Route::get('product/{slug}', 'ProductController@show')->name('product.show');
+           Route::post('product/Search', 'ProductController@search')->name('product.search');
 
        // ------------------------------End products--------------------------------------------
 

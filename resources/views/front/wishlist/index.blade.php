@@ -49,9 +49,9 @@
 
                             <!-- Image -->
                             <div class="image">
-                                @if (   $product->special_price )
+                                @if (   $product->Offer->special_price )
                                 <span class="label sale">sale</span>
-                            @elseif( $product->special_price ==0 && $product->viewed <10 )
+                            @elseif( $product->Offer->special_price ==0 && $product->viewed <10 )
                                 <span class="label new">new</span>
                             @endif
                                 <a href="{{ route('product.show', $product->slug) }}" class="img"><img src="{{ $product->Images[0]->photo ?? asset('front/assets/images/product/product-1.png') }}" alt="Product Image" height="230px !important"></a>
@@ -70,10 +70,10 @@
                                     </div>
 
                                     <h5 class="price">
-                                        @if (   $product->special_price )
+                                        @if (   $product->Offer->special_price )
                                           <span class="old">${{ round(  $product->price,2) }}</span>
                                         @endif
-                                        ${{ $product->special_price !=0 ? round($product->special_price,2) :  round($product->price,2) }}
+                                        ${{ $product->Offer->special_price !=0 ? round($product->Offer->special_price,2) :  round($product->price,2) }}
 
                                     </h5>
                                 </div>
@@ -119,19 +119,16 @@
                                     <br>
                                     <span class="availability">
                                         In Stock :
-                                        @if(  $product->in_stock == 1  )
+                                        @if(  $product->ManageStock->in_stock == 1  )
                                              <span>Availability</span>
-                                    <br>
+                                            @if(  $product->ManageStock->manage_stock == 1  )
 
-                                            @if(  $product->manage_stock == 1  )
-
-                                        <span class="availability">Quantity: <span>{{ $product->qty }}</span></span>
-                                    <br>
+                                        <h5 >Is available : <span>{{ $product->ManageStock->qty }}</span></h5>
 
                                              @endif
 
                                         @else
-                                           <span>Not Availability</span>
+                                           <span  >Not Availability</span>
 
                                         @endif
                                     </span>

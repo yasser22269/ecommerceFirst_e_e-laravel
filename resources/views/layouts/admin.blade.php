@@ -1,5 +1,5 @@
-    
-    
+
+
     @include('Admin.layouts.header')
 
     @include('Admin.layouts.nav')
@@ -15,7 +15,7 @@
                 </div>
         </div>
       </div>
-   
-    
-  
+
+
+
   @include('Admin.layouts.footer')
