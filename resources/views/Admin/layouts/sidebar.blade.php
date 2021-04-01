@@ -12,6 +12,12 @@
 
 
         <li class=" navigation-header">
+            <span data-i18n="nav.Order.pages">Orders</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Pages"></i>
+          </li>
+          <li class="nav-item  {{ Request::is(app()->getLocale().'/Admin/Order*') ? 'active' : '' }}"><a href="{{ route('OrderAdmin.index') }}"><i class="la la-check-square"></i><span class="menu-title" >Orders</span><span class="badge badge badge-info float-right"> {{ App\Models\Order::count() }} </span></a>
+          </li>
+
+          <li class=" navigation-header">
             <span data-i18n="nav.category.pages">categories</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Pages"></i>
           </li>
           <li class="nav-item  {{ Request::is(app()->getLocale().'/Admin/Category*') ? 'active' : '' }}"><a href="{{ route('Category.index') }}"><i class="la la-check-square"></i><span class="menu-title" >categories</span><span class="badge badge badge-info float-right"> {{ App\Models\category::count() }} </span></a>
@@ -74,6 +80,12 @@
             </li>
           </ul>
         </li>
+        <li class=" navigation-header">
+            <span data-i18n="nav.coupons.pages">coupons</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Pages"></i>
+          </li>
+          <li class="nav-item  {{ Request::is(app()->getLocale().'/Admin/coupon*') ? 'active' : '' }}"><a href="{{ route('coupon.index') }}"><i class="la la-edit"></i><span class="menu-title" >coupons</span><span class="badge badge badge-info float-right"> {{ App\Models\coupon::count() }} </span></a>
+         </li>
+
         <li class=" navigation-header"> </li>
         <li class=" navigation-header"> </li>
         <li class=" navigation-header"> </li>

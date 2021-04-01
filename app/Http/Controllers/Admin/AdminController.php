@@ -6,14 +6,22 @@ use Illuminate\Http\Request;
 use  App\Http\Controllers\Controller;
 use App\Http\Requests\AdminProfileRequest;
 use App\Models\Admin;
+use App\Models\ContactUS;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-   
+
     public function index()
     {
-        return view('Admin.index');
+        $produtctCount = Product::count();
+        $OrderCount = Order::count();
+        $UserCount = User::count();
+        $ContactUSCount = ContactUS::count();
+        return view('Admin.index',compact('produtctCount','OrderCount','UserCount','ContactUSCount'));
     }
 
 

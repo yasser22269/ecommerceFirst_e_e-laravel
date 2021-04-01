@@ -21,7 +21,7 @@
             </li>
              <li class="breadcrumb-item"><a href="{{ route('Options.index') }}">Options </a>
             </li>
-            <li class="breadcrumb-item active">Options  Create
+            <li class="breadcrumb-item active">Options  Edit
             </li>
           </ol>
         </div>

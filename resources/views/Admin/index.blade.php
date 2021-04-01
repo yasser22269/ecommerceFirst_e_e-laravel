@@ -1,16 +1,8 @@
-    
+
 @extends('layouts.admin')
 @section('title','home')
 @section('content')
   <!-- ////////////////////////////////////////////////////////////////////////////-->
- 
-
-
-
-
-
-
-
 
     <!-- eCommerce statistic -->
     <div class="row">
@@ -20,8 +12,8 @@
             <div class="card-body">
               <div class="media d-flex">
                 <div class="media-body text-left">
-                  <h3 class="info">850</h3>
-                  <h6>Products Sold</h6>
+                  <h3 class="info">{{  $produtctCount }}</h3>
+                  <h6>Products Count</h6>
                 </div>
                 <div>
                   <i class="icon-basket-loaded info font-large-2 float-right"></i>
@@ -29,7 +21,7 @@
               </div>
               <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
                 <div class="progress-bar bg-gradient-x-info" role="progressbar" style="width: 80%"
-                aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                aria-valuenow="{{  $produtctCount }}" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
           </div>
@@ -41,8 +33,8 @@
             <div class="card-body">
               <div class="media d-flex">
                 <div class="media-body text-left">
-                  <h3 class="warning">$748</h3>
-                  <h6>Net Profit</h6>
+                  <h3 class="warning">{{  $OrderCount }}</h3>
+                  <h6>Order Count</h6>
                 </div>
                 <div>
                   <i class="icon-pie-chart warning font-large-2 float-right"></i>
@@ -50,7 +42,7 @@
               </div>
               <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
                 <div class="progress-bar bg-gradient-x-warning" role="progressbar" style="width: 65%"
-                aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                aria-valuenow="{{   $OrderCount }}" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
           </div>
@@ -62,8 +54,8 @@
             <div class="card-body">
               <div class="media d-flex">
                 <div class="media-body text-left">
-                  <h3 class="success">146</h3>
-                  <h6>New Customers</h6>
+                  <h3 class="success">{{ $UserCount }}</h3>
+                  <h6>Customers</h6>
                 </div>
                 <div>
                   <i class="icon-user-follow success font-large-2 float-right"></i>
@@ -71,7 +63,7 @@
               </div>
               <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
                 <div class="progress-bar bg-gradient-x-success" role="progressbar" style="width: 75%"
-                aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                aria-valuenow="{{ $UserCount }}" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
           </div>
@@ -83,8 +75,8 @@
             <div class="card-body">
               <div class="media d-flex">
                 <div class="media-body text-left">
-                  <h3 class="danger">99.89 %</h3>
-                  <h6>Customer Satisfaction</h6>
+                  <h3 class="danger">{{ $ContactUSCount }}</h3>
+                  <h6>Contact US Count</h6>
                 </div>
                 <div>
                   <i class="icon-heart danger font-large-2 float-right"></i>
@@ -92,7 +84,7 @@
               </div>
               <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
                 <div class="progress-bar bg-gradient-x-danger" role="progressbar" style="width: 85%"
-                aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                aria-valuenow="{{ $ContactUSCount }}" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
           </div>
@@ -101,7 +93,7 @@
     </div>
     <!--/ eCommerce statistic -->
     <!-- Products sell and New Orders -->
-    <div class="row match-height">
+    {{-- <div class="row match-height">
       <div class="col-xl-8 col-12" id="ecommerceChartView">
         <div class="card card-shadow">
           <div class="card-header card-header-transparent py-20">
@@ -275,10 +267,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
     <!--/ Products sell and New Orders -->
     <!-- Recent Transactions -->
-    <div class="row">
+    {{-- <div class="row">
       <div id="recent-transactions" class="col-12">
         <div class="card">
           <div class="card-header">
@@ -512,10 +504,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
     <!--/ Recent Transactions -->
     <!--Recent Orders & Monthly Sales -->
-    <div class="row match-height">
+    {{-- <div class="row match-height">
       <div class="col-xl-8 col-lg-12">
         <div class="card">
           <div class="card-content ">
@@ -577,10 +569,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
     <!--/Recent Orders & Monthly Sales -->
     <!-- Basic Horizontal Timeline -->
-    <div class="row match-height">
+    {{-- <div class="row match-height">
       <div class="col-xl-4 col-lg-12">
         <div class="card">
           <div class="card-header">
@@ -800,7 +792,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
     <!--/ Basic Horizontal Timeline -->
- 
+
 @endsection

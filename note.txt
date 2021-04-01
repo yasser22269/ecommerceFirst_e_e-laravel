@@ -18,13 +18,15 @@ Slider                                                       ^^^^^^^^^^^
 
 
 
-Orders
+Orders                                                       ^^^^^^^^^^^
 Payments (PayPal + ........)
 Notifications(firebase or pusher)
-notifications login sms
 Admins Role
 Home Page
-coupon page
+coupon page                                                  ^^^^^^^^^^^
+
+
+notifications login sms
 
 __________________________________________
 
@@ -51,9 +53,6 @@ Phones Addresses WebEmails in Connect And footer
 reset password
 
 __________________________________________
-
-
-special_price table alone
 
   return $query->inRandomOrder()->take(4);
 
