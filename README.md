@@ -22,7 +22,7 @@ Orders                                                       ^^^^^^^^^^^
 coupon page                                                  ^^^^^^^^^^^
 Notifications(firebase or pusher)                            ^^^^^^^^^^^
 Home Page                                                    ^^^^^^^^^^^
-Admins Role
+Admins Role                                                 not finished
 
 Payments (PayPal + ........)                                not finished
 notifications login sms                                     not finished
