@@ -16,37 +16,34 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request ,$slug)
+    public function index(Request $request, $slug)
     {
         // $products = Product::paginate(PAGINATION_COUNT);
-    //    return $slug;
-        $categories = Category::where('slug', $slug)->translatedIn(app() -> getLocale())->first();
+        //    return $slug;
+        $categories = Category::where('slug', $slug)->translatedIn(app()->getLocale())->first();
         // return $categories;
         //القسم-الثانى Allproducts
-         if($slug =='Allproducts'){
-         $products = Product::translatedIn(app() -> getLocale())->paginate(PAGINATION_COUNT);
-            foreach($products as $product){
+        if ($slug == 'Allproducts') {
+            $products = Product::translatedIn(app()->getLocale())->paginate(PAGINATION_COUNT);
+            foreach ($products as $product) {
                 Check_specialprice_null($product);
             }
-         }
-        else{
-            if ($categories){
+        } else {
+            if ($categories) {
 
-             $products = $categories->product()->translatedIn(app() -> getLocale())->paginate(PAGINATION_COUNT);
+                $products = $categories->product()->translatedIn(app()->getLocale())->paginate(PAGINATION_COUNT);
 
-                foreach($products as $product){
+                foreach ($products as $product) {
                     Check_specialprice_null($product);
                 }
-        // return $products;
-    }
-             else
-            $products = Product::translatedIn(app() -> getLocale())->paginate(PAGINATION_COUNT);
-
+                // return $products;
+            } else
+                $products = Product::translatedIn(app()->getLocale())->paginate(PAGINATION_COUNT);
         }
 
         //  return $products;
 
-        return view('front.products.index',compact('products','slug'));
+        return view('front.products.index', compact('products', 'slug'));
     }
 
 
@@ -61,34 +58,34 @@ class ProductController extends Controller
 
 
         //viewed ++
-        $product->viewed ++;
+        $product->viewed++;
 
         $product->save();
 
-        if (!$product){
-            $products = Product::translatedIn(app() -> getLocale())->paginate(PAGINATION_COUNT);
-        return view('front.products.index',compact('products','slug'))
-        ->with(['success' => 'لا يوجد منتج بهذا الشكل']);
+        if (!$product) {
+            $products = Product::translatedIn(app()->getLocale())->paginate(PAGINATION_COUNT);
+            return view('front.products.index', compact('products', 'slug'))
+                ->with(['success' => 'لا يوجد منتج بهذا الشكل']);
         }
 
-        $product_id =$product->id;
-        $product_attributes =  Attribute::whereHas('option' , function ($q) use($product_id){
-           //  $q -> whereHas('product',function ($qq) use($product_id){
-                $q -> where('product_id',$product_id);
-           //  });
+        $product_id = $product->id;
+        $product_attributes =  Attribute::whereHas('option', function ($q) use ($product_id) {
+            //  $q -> whereHas('product',function ($qq) use($product_id){
+            $q->where('product_id', $product_id);
+            //  });
         })->get();
         //return $product_attributes ;
         $Total_comments = $product->comment->count();
-        $countnum=0;
-        foreach ($product->comment as $comment){
-            $countnum+= intval($comment->rate);
+        $countnum = 0;
+        foreach ($product->comment as $comment) {
+            $countnum += intval($comment->rate);
         }
-        if($Total_comments !=0)
-         $countnum= $countnum/$Total_comments;
+        if ($Total_comments != 0)
+            $countnum = $countnum / $Total_comments;
 
 
 
-        return view('front.products.show',compact('product','slug','product_attributes',"Total_comments",'countnum'));
+        return view('front.products.show', compact('product', 'slug', 'product_attributes', "Total_comments", 'countnum'));
     }
 
 
@@ -99,19 +96,17 @@ class ProductController extends Controller
      */
     public function search(Request $request)
     {
-      $productid= ProductTranslation::select('product_id')->where('name','like','%'. $request->name .'%')->orWhere('description','like','%'. $request->name .'%')->orWhere('short_description','like','%'. $request->name .'%')->get();
+        $productid = ProductTranslation::select('product_id')->where('name', 'like', '%' . $request->name . '%')->orWhere('description', 'like', '%' . $request->name . '%')->orWhere('short_description', 'like', '%' . $request->name . '%')->get();
 
-      $products = Product::whereIn("id",$productid)->paginate(PAGINATION_COUNT);
-      
-        if(!$products){
-            $products = Product::translatedIn(app() -> getLocale())->paginate(PAGINATION_COUNT);
-            return view('front.products.index',compact('products','slug'))
-            ->with(['success' => 'لا يوجد منتج بهذا الشكل']);
+        $products = Product::whereIn("id", $productid)->paginate(PAGINATION_COUNT);
+
+        if (!$products) {
+            $products = Product::translatedIn(app()->getLocale())->paginate(PAGINATION_COUNT);
+            return view('front.products.index', compact('products', 'slug'))
+                ->with(['success' => 'لا يوجد منتج بهذا الشكل']);
         }
 
-        return view('front.products.search',compact('products'));
-
-
+        return view('front.products.search', compact('products'));
     }
 
     /**

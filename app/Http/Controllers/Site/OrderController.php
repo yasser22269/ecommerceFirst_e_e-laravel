@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Events\NewOrder;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -20,9 +21,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-       $carts =Cart::content();
-     //  return  $carts ;
-        return view("front\checkout\index",compact('carts'));
+        $carts = Cart::content();
+        //  return  $carts ;
+        return view("front\checkout\index", compact('carts'));
     }
 
     /**
@@ -43,30 +44,31 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
-        //OrderRequest Request
-     //   return request('payment-method');
-     try{
-      DB::beginTransaction();
-        $order = Order::create($request->except(['_token','payment-method']));
-        $order->payment_gateway = request('payment-method');
-        $order->save();
-            // Insert into order_product table
-        foreach (Cart::content() as $item) {
-            OrderProduct::create([
-                'order_id' => $order->id,
-                'product_id' => $item->id,
-                'quantity' => $item->qty,
-                'options' => $item->options->options,
-            ]);
-            Cart::remove($item->rowId);
-        }
-        DB::commit();
-        return redirect()->Back()->with(['success' => 'تم ألاضافة بنجاح']);
+       try {
+            DB::beginTransaction();
+            $order = Order::create($request->except(['_token', 'payment-method']));
+            $order->payment_gateway = request('payment-method');
+            $order->save();
 
-        }catch (\Exception $ex) {
-            DB::rollback();
-            return  redirect()->Back()->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
-        }
+            // Insert into order_product table
+            foreach (Cart::content() as $item) {
+                OrderProduct::create([
+                    'order_id' => $order->id,
+                    'product_id' => $item->id,
+                    'quantity' => $item->qty,
+                    'options' => $item->options->options,
+                ]);
+                Cart::remove($item->rowId);
+            }
+
+            event(new NewOrder($order));
+           //  return $order;
+            DB::commit();
+            return redirect()->Back()->with(['success' => 'تم ألاضافة بنجاح']);
+       } catch (\Exception $ex) {
+           DB::rollback();
+           return  redirect()->Back()->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+       }
     }
 
     /**
@@ -79,13 +81,12 @@ class OrderController extends Controller
     {
         //return $request;
 
-        $coupon = coupon::where(['code' => $request->code ,'status' => 1])->first();
-        if(!$coupon)
-         return response() -> json(['status' => false , 'error' => "لا يوجد كوبون " ]);
+        $coupon = coupon::where(['code' => $request->code, 'status' => 1])->first();
+        if (!$coupon)
+            return response()->json(['status' => false, 'error' => "لا يوجد كوبون "]);
 
         //  return $coupon;
-      return response() -> json(['status' => true, 'success' => "تم اضافه الكوبون" , 'Coupon_value' => $coupon->value ,'Coupon_code'=>$coupon->code]);
-
+        return response()->json(['status' => true, 'success' => "تم اضافه الكوبون", 'Coupon_value' => $coupon->value, 'Coupon_code' => $coupon->code]);
     }
 
 

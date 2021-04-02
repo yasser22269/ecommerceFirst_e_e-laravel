@@ -33,6 +33,42 @@ type="text/javascript"></script>
 
 
 @yield('js')
-<!-- END PAGE LEVEL JS-->
+
+
+<script src="//js.pusher.com/3.1/pusher.min.js"></script>
+
+<script>
+    var previousCounter = $('.notification-counter').text(); //5
+    var notificationsCount = parseInt(previousCounter);
+
+    var pusher = new Pusher('174384ae132928fe9a82', {
+        encrypted: true
+    });
+    //Pusher.logToConsole = true;
+    // Subscribe to the channel we specified in our Laravel Event
+    var channel = pusher.subscribe('ecommerceFirst_e_e');
+    // Bind a function to a Our Event
+    channel.bind('App\\Events\\NewOrder', function(data) {
+        notificationsCount += 1;
+        $('.notification-counter').show();
+        $('.notification-counter').text(notificationsCount);
+        $order_id = data.order_id;
+        var newNotificationHtml = `<a href="{{ url('Admin/OrderAdmin/`+data.order_id+`') }}">
+            <div class="media">
+              <div class="media-left align-self-center"><i class="ft-plus-square icon-bg-circle bg-cyan"></i></div>
+              <div class="media-body">
+                <h6 class="media-heading">You have new order!</h6>
+                <p class="notification-text font-small-3 text-muted">`+data.user.name + data.order_total +`$</p>
+                {{-- <small>
+                  <time class="media-meta text-muted" datetime="`+data.order_date  + +`">`+data.order_date+`</time>
+                </small> --}}
+              </div>
+            </div>
+          </a> `;
+          var existingNotifications = $('#notificationsTitlePusher').html();
+
+          $('#notificationsTitlePusher').html(newNotificationHtml + existingNotifications);
+    });
+</script>
 </body>
 </html>

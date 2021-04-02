@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class CouponController extends Controller
 {
-        /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -19,7 +19,7 @@ class CouponController extends Controller
     {
         $coupons = coupon::paginate(PAGINATION_COUNT);
 
-        return view('Admin.coupons.index',compact('coupons'));
+        return view('Admin.coupons.index', compact('coupons'));
     }
 
     public function create()
@@ -36,25 +36,23 @@ class CouponController extends Controller
      */
     public function store(CouponRequest $request)
     {
-         try{
-           // return $request;
-       DB::beginTransaction();
-            if(isset($request->status) && $request->status ==1)
-            $request->request->add(['status' => 1]);
-              else
-              $request->request->add(['status' => 0]);
+        try {
+            // return $request;
+            DB::beginTransaction();
+            if (isset($request->status) && $request->status == 1)
+                $request->request->add(['status' => 1]);
+            else
+                $request->request->add(['status' => 0]);
 
             //   return $request->except('_token','type');
-            $coupon =  coupon::create($request->except('_token','type'));
+            $coupon =  coupon::create($request->except('_token', 'type'));
 
-           DB::commit();
-              return redirect()->route('coupon.index')->with(['success' => 'تم ألاضافة بنجاح']);
-
-         }catch (\Exception $ex) {
-             DB::rollback();
-             return redirect()->route('coupon.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
-         }
-
+            DB::commit();
+            return redirect()->route('coupon.index')->with(['success' => 'تم ألاضافة بنجاح']);
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return redirect()->route('coupon.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        }
     }
 
     /**
@@ -67,8 +65,7 @@ class CouponController extends Controller
     {
         $coupon = coupon::findOrFail($id);
 
-        return view('Admin.coupons.edit',compact('coupon'));
-
+        return view('Admin.coupons.edit', compact('coupon'));
     }
 
     /**
@@ -78,26 +75,25 @@ class CouponController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(CouponRequest $request,$id)
+    public function update(CouponRequest $request, $id)
     {
-        try{
+        try {
 
             DB::beginTransaction();
-        $coupon = coupon::find($id);
-        if(isset($request->status) && $request->status ==1)
-        $request->request->add(['status' => 1]);
-          else
-          $request->request->add(['status' => 0]);
-          
-          $coupon->update($request->all());
+            $coupon = coupon::find($id);
+            if (isset($request->status) && $request->status == 1)
+                $request->request->add(['status' => 1]);
+            else
+                $request->request->add(['status' => 0]);
 
-        DB::commit();
-        return redirect()->route('coupon.index')->with(['success' => 'تم التعديل بنجاح']);
+            $coupon->update($request->all());
 
-  }catch (\Exception $ex) {
-      DB::rollback();
-      return redirect()->route('coupon.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
-  }
+            DB::commit();
+            return redirect()->route('coupon.index')->with(['success' => 'تم التعديل بنجاح']);
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return redirect()->route('coupon.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        }
     }
 
 
@@ -112,9 +108,9 @@ class CouponController extends Controller
     {
         $coupon = coupon::find($id);
         if (!$coupon)
-        return redirect()->route('coupon.index')->with(['error' => 'هذا الماركة غير موجود ']);
+            return redirect()->route('coupon.index')->with(['error' => 'هذا الماركة غير موجود ']);
 
         $coupon->delete();
-       return redirect()->route('coupon.index')->with(['success' => 'تم الحذف بنجاح']);
+        return redirect()->route('coupon.index')->with(['success' => 'تم الحذف بنجاح']);
     }
 }

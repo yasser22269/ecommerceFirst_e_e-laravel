@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
-use App\Models\Category ;
+use App\Models\Category;
 use App\Models\CategoryTranslation;
 use Illuminate\Support\Facades\DB;
 
@@ -21,7 +21,7 @@ class CategoryController extends Controller
     {
         //translatedIn(app() -> getLocale())->
         $categories = Category::paginate(PAGINATION_COUNT);
-        return view('Admin.categories.index',compact('categories'));
+        return view('Admin.categories.index', compact('categories'));
     }
 
     /**
@@ -31,11 +31,11 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categoriesParent = Category::select('id')->translatedIn(app() -> getLocale())->Parent()->get();
-        $categories = Category::select('id')->translatedIn(app() -> getLocale())->get();
-       // $categories = Category::select('id')->translatedIn(app() -> getLocale())->get();
+        $categoriesParent = Category::select('id')->translatedIn(app()->getLocale())->Parent()->get();
+        $categories = Category::select('id')->translatedIn(app()->getLocale())->get();
+        // $categories = Category::select('id')->translatedIn(app() -> getLocale())->get();
         // return $categories;
-        return view('Admin.categories.create',compact('categories','categoriesParent'));
+        return view('Admin.categories.create', compact('categories', 'categoriesParent'));
     }
 
     /**
@@ -46,16 +46,16 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-         try{
-           // return $request;
-       DB::beginTransaction();
-            if(isset($request->is_active) && $request->is_active ==1)
-            $request->request->add(['is_active' => 1]);
-              else
-              $request->request->add(['is_active' => 0]);
+        try {
+            // return $request;
+            DB::beginTransaction();
+            if (isset($request->is_active) && $request->is_active == 1)
+                $request->request->add(['is_active' => 1]);
+            else
+                $request->request->add(['is_active' => 0]);
 
-                //parent
-              if(! isset($request->parent_id) || $request->type ==1)
+            //parent
+            if (!isset($request->parent_id) || $request->type == 1)
                 $request->request->add(['parent_id' => null]);
 
             //slug
@@ -63,22 +63,20 @@ class CategoryController extends Controller
 
 
             //   return $request->except('_token','type');
-            $Category =  Category::create($request->except('_token','type'));
+            $Category =  Category::create($request->except('_token', 'type'));
 
 
             //save translations
-           // $Category->name = $request->name;
+            // $Category->name = $request->name;
             //$Category->save();
 
-           // return $Category;
-           DB::commit();
-              return redirect()->route('Category.index')->with(['success' => 'تم ألاضافة بنجاح']);
-
-         }catch (\Exception $ex) {
-             DB::rollback();
-             return redirect()->route('Category.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
-         }
-
+            // return $Category;
+            DB::commit();
+            return redirect()->route('Category.index')->with(['success' => 'تم ألاضافة بنجاح']);
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return redirect()->route('Category.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        }
     }
 
     /**
@@ -91,11 +89,10 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        $categories = Category::translatedIn(app() -> getLocale())->get();
-        $categoriesParent = Category::select('id')->translatedIn(app() -> getLocale())->Parent()->get();
+        $categories = Category::translatedIn(app()->getLocale())->get();
+        $categoriesParent = Category::select('id')->translatedIn(app()->getLocale())->Parent()->get();
 
-        return view('Admin.categories.edit',compact('categories',"category",'categoriesParent'));
-
+        return view('Admin.categories.edit', compact('categories', "category", 'categoriesParent'));
     }
 
     /**
@@ -105,39 +102,38 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request,$id)
+    public function update(CategoryRequest $request, $id)
     {
-        try{
+        try {
 
             DB::beginTransaction();
-        $Category = Category::find($id);
-        if(isset($request->is_active) && $request->is_active ==1)
-        $request->request->add(['is_active' => 1]);
-          else
-          $request->request->add(['is_active' => 0]);
+            $Category = Category::find($id);
+            if (isset($request->is_active) && $request->is_active == 1)
+                $request->request->add(['is_active' => 1]);
+            else
+                $request->request->add(['is_active' => 0]);
 
 
-          if(! isset($request->parent_id) || $request->type ==1)
-            $request->request->add(['parent_id' => null]);
+            if (!isset($request->parent_id) || $request->type == 1)
+                $request->request->add(['parent_id' => null]);
 
             $request->request->add(['slug' => \Str::slug($request->slug)]);
 
 
-          // return $request;
-          $Category->update($request->all());
+            // return $request;
+            $Category->update($request->all());
 
-        //save translations
-       // $Category->name = $request->name;
-       // $Category->save();
+            //save translations
+            // $Category->name = $request->name;
+            // $Category->save();
 
 
-        DB::commit();
-        return redirect()->route('Category.index')->with(['success' => 'تم التعديل بنجاح']);
-
-  }catch (\Exception $ex) {
-      DB::rollback();
-      return redirect()->route('Category.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
-  }
+            DB::commit();
+            return redirect()->route('Category.index')->with(['success' => 'تم التعديل بنجاح']);
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return redirect()->route('Category.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        }
     }
 
     /**
@@ -149,21 +145,21 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $Category = Category::find($id);
-        $Categories = Category::where('parent_id',$Category->id)->get();
+        $Categories = Category::where('parent_id', $Category->id)->get();
 
-       // return $Categories;
-     //   return $Categories->count();
-     $CategoryNames = CategoryTranslation::where('category_id',$Category->id)->get();
-     if($CategoryNames->count() >0){
-         foreach ($CategoryNames as  $CategoryName) {
-              $CategoryName->delete();
-     }
-    }
+        // return $Categories;
+        //   return $Categories->count();
+        $CategoryNames = CategoryTranslation::where('category_id', $Category->id)->get();
+        if ($CategoryNames->count() > 0) {
+            foreach ($CategoryNames as  $CategoryName) {
+                $CategoryName->delete();
+            }
+        }
 
         //delete children
-        if($Categories->count() >0){
-                foreach ($Categories as  $Categorya) {
-                    $Categorya->delete();
+        if ($Categories->count() > 0) {
+            foreach ($Categories as  $Categorya) {
+                $Categorya->delete();
             }
         }
 

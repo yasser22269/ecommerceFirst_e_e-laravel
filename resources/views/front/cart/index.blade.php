@@ -65,7 +65,11 @@
                                     <td class="pro-thumbnail"><a href="{{  route('product.show', $cart->options->slug) }} "><img src="{{ $cart->options->image }}" alt="Product"></a></td>
                                     <td class="pro-title"><a href="{{  route('product.show', $cart->options->slug) }}">{{ $cart->name }}</a> </td>
                                     <td>{{ ($cart->options->options)??'not options' }}</td>
-                                    <td class="pro-price"><span>${{ $cart->price }}</span></td>
+                                    <td class="pro-price"><span>$
+                                        
+                                        {{ $cart->price }}
+
+                                    </span></td>
                                     <td class="pro-quantity">
                                             {{-- <div class="quantity">
                                                 <div class="pro-qty"><span class="dec "></span><input type="text" value=""><span class="inc "></span></div>

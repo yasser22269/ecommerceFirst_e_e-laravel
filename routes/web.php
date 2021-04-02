@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\NewOrder;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -23,7 +25,6 @@ Route::group([
 
     ]
 ], function () {
-
 
 
 

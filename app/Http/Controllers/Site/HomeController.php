@@ -17,42 +17,40 @@ class HomeController extends Controller
     {
         $user = auth('web')->user();
         // Auth()->guard('admin')->user()
-        return view('front.profile.profile',compact('user'));
+        return view('front.profile.profile', compact('user'));
     }
 
 
     public function Updateprofile(UserProfileRequest $request)
     {
 
-            $user = User::where('id',$request->id)->first();
+        $user = User::where('id', $request->id)->first();
 
-            //   return $user;
-            $user->name = $request->name;
-            $user->email = $request->email;
-            if(isset($request['password']) && $request['password'] != ''){
-                $user->password = bcrypt($request['password']);
+        //   return $user;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if (isset($request['password']) && $request['password'] != '') {
+            $user->password = bcrypt($request['password']);
+        }
+        // return public_path("images/Avatars/". $user->avatar);
 
-            }
-            // return public_path("images/Avatars/". $user->avatar);
+        if ($request->has('avatar') && $request->avatar != "account-image-placeholder.jpg") {
 
-            if ($request->has('avatar') && $request->avatar != "account-image-placeholder.jpg" ) {
+            $fileName = uploadImage('Avatars', $request->avatar);
 
-                $fileName = uploadImage('Avatars', $request->avatar);
-
-                $image_path = public_path("images/Avatars/". $user->avatar);
+            $image_path = public_path("images/Avatars/" . $user->avatar);
 
             // Value is not URL but directory file path
-                if(File::exists($image_path) && $user->avatar != "account-image-placeholder.jpg") {
-                    File::delete($image_path);
-                }
-            $user->avatar =  $fileName;
-
+            if (File::exists($image_path) && $user->avatar != "account-image-placeholder.jpg") {
+                File::delete($image_path);
             }
+            $user->avatar =  $fileName;
+        }
 
-            $user->save();
+        $user->save();
 
-            // DB::commit();
-            return redirect()->back()->with(['success' => 'تم التحديث بنجاح']);
+        // DB::commit();
+        return redirect()->back()->with(['success' => 'تم التحديث بنجاح']);
     }
 
 
@@ -81,9 +79,9 @@ class HomeController extends Controller
         // return $request->all();
         ContactUS::create($request->all());
 
-            //   return $user;Request
-            // return public_path("images/Avatars/". $user->avatar);
-            // DB::commit();
-            return redirect()->back()->with(['success' => 'تم الارسال بنجاح']);
+        //   return $user;Request
+        // return public_path("images/Avatars/". $user->avatar);
+        // DB::commit();
+        return redirect()->back()->with(['success' => 'تم الارسال بنجاح']);
     }
 }

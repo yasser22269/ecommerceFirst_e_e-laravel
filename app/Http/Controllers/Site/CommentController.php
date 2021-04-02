@@ -38,22 +38,21 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request)
     {
-        try{
+        try {
 
             DB::beginTransaction();
 
 
 
-                 $Comment =  Comment::create($request->except('_token'));
+            $Comment =  Comment::create($request->except('_token'));
 
 
-                DB::commit();
-                   return redirect()->Back()->with(['success' => 'تم ألاضافة بنجاح']);
-
-             }catch (\Exception $ex) {
-                 DB::rollback();
-                 return  redirect()->Back()->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
-             }
+            DB::commit();
+            return redirect()->Back()->with(['success' => 'تم ألاضافة بنجاح']);
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return  redirect()->Back()->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        }
     }
 
     /**

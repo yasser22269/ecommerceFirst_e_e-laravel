@@ -21,7 +21,7 @@ class AdminController extends Controller
         $OrderCount = Order::count();
         $UserCount = User::count();
         $ContactUSCount = ContactUS::count();
-        return view('Admin.index',compact('produtctCount','OrderCount','UserCount','ContactUSCount'));
+        return view('Admin.index', compact('produtctCount', 'OrderCount', 'UserCount', 'ContactUSCount'));
     }
 
 
@@ -29,23 +29,23 @@ class AdminController extends Controller
     {
         $admin = auth('admin')->user();
         // Auth()->guard('admin')->user()
-        return view('Admin.profile.index',compact('admin'));
+        return view('Admin.profile.index', compact('admin'));
     }
 
 
-    public function updateprofile(AdminProfileRequest $request,$id)
+    public function updateprofile(AdminProfileRequest $request, $id)
     {
 
-            $admin = Admin::findOrfail($id);
-            // return $request;
-            $admin->name = $request->name;
-            $admin->email = $request->email;
-            if(isset($request['password']) && $request['password'] != ''){
-                $admin->password = bcrypt($request['password']);
-              }
-            $admin->save();
+        $admin = Admin::findOrfail($id);
+        // return $request;
+        $admin->name = $request->name;
+        $admin->email = $request->email;
+        if (isset($request['password']) && $request['password'] != '') {
+            $admin->password = bcrypt($request['password']);
+        }
+        $admin->save();
 
-            // DB::commit();
-            return redirect()->back()->with(['success' => 'تم التحديث بنجاح']);
+        // DB::commit();
+        return redirect()->back()->with(['success' => 'تم التحديث بنجاح']);
     }
 }

@@ -20,7 +20,7 @@ class AttributeController extends Controller
     public function index()
     {
         $attributes = Attribute::paginate(PAGINATION_COUNT);
-        return view('Admin.attributes.index',compact('attributes'));
+        return view('Admin.attributes.index', compact('attributes'));
     }
 
     /**
@@ -42,27 +42,25 @@ class AttributeController extends Controller
      */
     public function store(AttributeRequest $request)
     {
-        try{
+        try {
 
-       DB::beginTransaction();
+            DB::beginTransaction();
 
 
 
             $Attribute =  Attribute::create($request->except('_token'));
 
             //save translations
-          //  $Attribute->name = $request->name;
-           // $Attribute->save();
+            //  $Attribute->name = $request->name;
+            // $Attribute->save();
 
-           // return $Attribute;
-           DB::commit();
-              return redirect()->route('Attributes.index')->with(['success' => 'تم ألاضافة بنجاح']);
-
-        }catch (\Exception $ex) {
+            // return $Attribute;
+            DB::commit();
+            return redirect()->route('Attributes.index')->with(['success' => 'تم ألاضافة بنجاح']);
+        } catch (\Exception $ex) {
             DB::rollback();
             return redirect()->route('Attributes.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
         }
-
     }
 
     /**
@@ -74,8 +72,7 @@ class AttributeController extends Controller
     public function edit($id)
     {
         $Attribute = Attribute::findOrFail($id);
-        return view('Admin.attributes.edit',compact("Attribute"));
-
+        return view('Admin.attributes.edit', compact("Attribute"));
     }
 
     /**
@@ -85,28 +82,27 @@ class AttributeController extends Controller
      * @param  \App\Attribute  $Attribute
      * @return \Illuminate\Http\Response
      */
-    public function update(AttributeRequest $request,$id)
+    public function update(AttributeRequest $request, $id)
     {
-        try{
+        try {
 
             DB::beginTransaction();
-        $Attribute = Attribute::find($id);
+            $Attribute = Attribute::find($id);
 
-          // return $request;
-          $Attribute->update($request->all());
+            // return $request;
+            $Attribute->update($request->all());
 
-        //save translations
-      //  $Attribute->name = $request->name;
-      //  $Attribute->save();
+            //save translations
+            //  $Attribute->name = $request->name;
+            //  $Attribute->save();
 
 
-        DB::commit();
-        return redirect()->route('Attributes.index')->with(['success' => 'تم التعديل بنجاح']);
-
-  }catch (\Exception $ex) {
-      DB::rollback();
-      return redirect()->route('Attributes.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
-  }
+            DB::commit();
+            return redirect()->route('Attributes.index')->with(['success' => 'تم التعديل بنجاح']);
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return redirect()->route('Attributes.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        }
     }
 
     /**
@@ -121,16 +117,15 @@ class AttributeController extends Controller
 
 
         if (!$Attribute)
-        return redirect()->route('Attributes.index')->with(['error' => 'هذا صفة غير موجود ']);
+            return redirect()->route('Attributes.index')->with(['error' => 'هذا صفة غير موجود ']);
 
-        $AttributeNames = AttributeTranslation::where('Attribute_id',$Attribute->id)->get();
-        if($AttributeNames->count() >0){
+        $AttributeNames = AttributeTranslation::where('Attribute_id', $Attribute->id)->get();
+        if ($AttributeNames->count() > 0) {
             foreach ($AttributeNames as  $AttributeName) {
-                 $AttributeName->delete();
+                $AttributeName->delete();
+            }
         }
-    }
         $Attribute->delete();
         return redirect()->route('Attributes.index')->with(['success' => 'تم الحذف بنجاح']);
     }
-
 }

@@ -37,6 +37,6 @@ class AdminLoginRequest extends FormRequest
             'email.email' => 'صيغة البريد الالكتروني غير صحيحة ',
             'password.required' => 'يجب الدخال كلمة المرور'
 
-            ];
+        ];
     }
 }

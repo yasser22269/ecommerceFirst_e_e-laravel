@@ -15,12 +15,12 @@ class WishlistController extends Controller
     public function index(Request $request)
     {
 
-        $products= auth('web')->user()->wishlist()->paginate(PAGINATION_COUNT);
+        $products = auth('web')->user()->wishlist()->paginate(PAGINATION_COUNT);
 
 
-       //   return $products;
+        //   return $products;
 
-        return view('front.wishlist.index',compact('products','slug'));
+        return view('front.wishlist.index', compact('products', 'slug'));
     }
 
 
@@ -28,17 +28,15 @@ class WishlistController extends Controller
 
     public function store(Request $request)
     {
-        if (!Auth::user() == 1){
+        if (!Auth::user() == 1) {
             // return redirect()->route('login')->with(['error' => 'يرجى تسجيل الدخول اولا']);
-            return response() -> json(['error' => 'يرجى تسجيل الدخول اولا']);
-        }
-        else if (! auth('web')->user()->wishlistHas(request('productId'))) {
-             auth('web')->user()->wishlist()->attach(request('productId'));
-            return response() -> json(['status' => true , 'wished' => true]);
-        }
-        else{
+            return response()->json(['error' => 'يرجى تسجيل الدخول اولا']);
+        } else if (!auth('web')->user()->wishlistHas(request('productId'))) {
+            auth('web')->user()->wishlist()->attach(request('productId'));
+            return response()->json(['status' => true, 'wished' => true]);
+        } else {
             auth('web')->user()->wishlist()->detach(request('productId'));
-        return response() -> json(['status' => true , 'wished' => false]);  // added before we can use enumeration here
+            return response()->json(['status' => true, 'wished' => false]);  // added before we can use enumeration here
 
         }
     }

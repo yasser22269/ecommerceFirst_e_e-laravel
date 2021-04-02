@@ -19,13 +19,12 @@ Slider                                                       ^^^^^^^^^^^
 
 
 Orders                                                       ^^^^^^^^^^^
-Payments (PayPal + ........)
-Notifications(firebase or pusher)
-Admins Role
-Home Page
 coupon page                                                  ^^^^^^^^^^^
+Notifications(firebase or pusher)                            ^^^^^^^^^^^
+Home Page                                                    ^^^^^^^^^^^
+Admins Role
 
-
+Payments (PayPal + ........)
 notifications login sms
 
 __________________________________________

@@ -22,8 +22,8 @@ class UserController extends Controller
     {
         $Users = User::paginate(PAGINATION_COUNT);
         // translatedIn(app() -> getLocale())->
-        // return Request::has('brands'); 
-        return view('Admin.users.index',compact('Users'));
+        // return Request::has('brands');
+        return view('Admin.users.index', compact('Users'));
     }
 
 
@@ -31,9 +31,9 @@ class UserController extends Controller
     {
         $Brand = User::find($id);
         if (!$Brand)
-        return redirect()->route('Users.index')->with(['error' => 'هذا العضو غير موجود ']);
+            return redirect()->route('Users.index')->with(['error' => 'هذا العضو غير موجود ']);
 
         $Brand->delete();
-       return redirect()->route('Users.index')->with(['success' => 'تم الحذف بنجاح']);
+        return redirect()->route('Users.index')->with(['success' => 'تم الحذف بنجاح']);
     }
 }
